@@ -882,14 +882,12 @@ footer{
 <nav>
   <div class="nav-logo">🌳 Baum<span>Intel</span></div>
   <div class="nav-links">
-    <a href="#demo">Live Demo</a>
     <a href="#missions">Missions</a>
     <a href="#city-panel">City Panel</a>
     <a href="#pipeline">Data Pipeline</a>
-    <a href="#simulation">⚡ Simulate</a>
-    <a href="#impact">Impact</a>
+    
   </div>
-  <a href="#simulation" class="nav-cta" style="background:var(--red)">⚡ Live Sim</a>
+  <a href="demo/index.html" class="nav-cta" style="background:var(--red)">Try Demo Map</a>
 </nav>
 
 <!-- HERO -->
@@ -899,7 +897,6 @@ footer{
   <div class="hero-glow2"></div>
   <div class="hero-content">
     <div class="fade-up fade-up-1">
-      <div class="hero-eyebrow">🌍 Munich Urban Forestry Initiative</div>
       <h1 class="hero-headline">
         Student-powered<br/><em>urban tree</em><br/>intelligence system
       </h1>
@@ -907,73 +904,9 @@ footer{
         Helping cities like Munich maintain real-time tree data using AI + student missions — transforming civic engagement into a live GIS dataset.
       </p>
       <div class="hero-btns">
-        <a href="#demo" class="btn-primary">🚀 Try Demo Map</a>
-        <a href="#missions" class="btn-ghost">🎯 View Missions</a>
-        <a href="#how" class="btn-ghost">🧠 How It Works</a>
+        <a href="demo/index.html" class="btn-primary">Try Demo Map</a>
       </div>
-      <div class="hero-stats">
-        <div class="h-stat">
-          <div class="val">12,483</div>
-          <div class="lbl">Trees mapped</div>
-        </div>
-        <div class="h-stat">
-          <div class="val">847</div>
-          <div class="lbl">Students active</div>
-        </div>
-        <div class="h-stat">
-          <div class="val">94%</div>
-          <div class="lbl">Data accuracy</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mini map in hero -->
-    <div class="hero-map-card fade-up fade-up-2" id="demo">
-      <div class="hero-map-inner">
-        <div class="hm-grid"></div>
-        <!-- Roads -->
-        <div class="hm-road hm-road-h hm-road-main" style="top:42%"></div>
-        <div class="hm-road hm-road-h" style="top:22%;height:8px"></div>
-        <div class="hm-road hm-road-h" style="top:68%;height:8px"></div>
-        <div class="hm-road hm-road-v hm-road-main" style="left:47%"></div>
-        <div class="hm-road hm-road-v" style="left:22%;width:8px"></div>
-        <div class="hm-road hm-road-v" style="left:72%;width:8px"></div>
-        <!-- Mission zone -->
-        <div class="hm-zone" style="left:10%;top:8%;width:40%;height:30%">MISSION ALPHA</div>
-        <!-- Diseased cluster -->
-        <div class="hm-cluster" style="left:58%;top:50%;width:80px;height:80px;transform:translate(-50%,-50%)"></div>
-        <!-- Storm hotspot -->
-        <div class="hm-storm" style="left:20%;top:60%;width:72px;height:52px;transform:translate(-50%,-50%)">⛈</div>
-        <!-- Missing inventory -->
-        <div class="hm-missing" style="right:6%;top:18%;width:70px;height:70px;transform:translateY(-50%)">
-          <span style="font-size:18px">❓</span><span style="font-size:8px;margin-top:2px">No Data</span>
-        </div>
-        <!-- Healthy pins -->
-        <div class="hm-pin healthy" style="left:16%;top:13%" onclick="showPopup(this,'Linden','Healthy','2d ago','97%','#1A7A3C')"><span>🌳</span></div>
-        <div class="hm-pin healthy" style="left:28%;top:17%" onclick="showPopup(this,'Oak','Good','5d ago','91%','#1A7A3C')"><span>🌲</span></div>
-        <div class="hm-pin healthy" style="left:22%;top:30%" onclick="showPopup(this,'Maple','Healthy','1d ago','99%','#1A7A3C')"><span>🌳</span></div>
-        <div class="hm-pin healthy" style="left:62%;top:24%" onclick="showPopup(this,'Beech','Good','3d ago','88%','#1A7A3C')"><span>🌲</span></div>
-        <div class="hm-pin healthy" style="left:72%;top:58%" onclick="showPopup(this,'Birch','Healthy','6h ago','96%','#1A7A3C')"><span>🌳</span></div>
-        <div class="hm-pin healthy" style="left:38%;top:63%" onclick="showPopup(this,'Oak','Fair','2d ago','82%','#1A7A3C')"><span>🌲</span></div>
-        <!-- Sick pins -->
-        <div class="hm-pin sick" style="left:54%;top:45%" onclick="showPopup(this,'Oak — Diseased','Critical','8d ago','71%','#B91C1C')"><span>🦠</span></div>
-        <div class="hm-pin sick" style="left:63%;top:53%" onclick="showPopup(this,'Oak — Diseased','Critical','10d ago','68%','#B91C1C')"><span>🦠</span></div>
-        <div class="hm-pulse-dot" style="left:calc(54% + 9px);top:calc(45% + 9px)"></div>
-        <!-- Popup -->
-        <div class="tree-popup hidden" id="tree-popup">
-          <div class="tp-species" id="tp-species">Linden Tree</div>
-          <div class="tp-row"><span class="tp-lbl">Condition</span><span class="tp-val" id="tp-cond">Healthy</span></div>
-          <div class="tp-row"><span class="tp-lbl">Last check</span><span class="tp-val" id="tp-date">2d ago</span></div>
-          <div class="tp-row"><span class="tp-lbl">Reliability</span><span class="tp-val" id="tp-rel">97%</span></div>
-          <div class="tp-badge" id="tp-badge" style="background:rgba(26,122,60,.2);color:#4ADE80">✓ AI Verified</div>
-        </div>
-      </div>
-      <div class="hm-bar">
-        <div class="hm-legend"><div class="hm-dot" style="background:#1A7A3C"></div>Healthy tree</div>
-        <div class="hm-legend"><div class="hm-dot" style="background:#B91C1C"></div>Disease cluster</div>
-        <div class="hm-legend"><div class="hm-dot" style="background:#C05C00;border-radius:2px"></div>Storm damage</div>
-        <div class="hm-legend"><div class="hm-dot" style="background:rgba(0,82,204,.5)"></div>Mission zone</div>
-      </div>
+      
     </div>
   </div>
 </section>
@@ -1038,6 +971,37 @@ footer{
           <div class="reward-tag">+280 XP · 🌪 Responder</div>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- Leaderboard -->
+  <div class="leaderboard-wrap" style="margin-top:28px">
+    <div class="lb-head">
+      <div class="lb-head-title">🏆 School Leaderboard — Giesing-Grundschule</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4)">Season 3 · May 2026</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank gold">1</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#FF9800,#E65100)">👧</div>
+      <div class="lb-info"><div class="lb-name">Lena K.</div><div class="lb-school">Class 5b</div></div>
+      <div class="lb-right"><div class="lb-pts">4,120</div><div class="lb-streak">🔥 18-day streak</div></div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank silver">2</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#2196F3,#1565C0)">👦</div>
+      <div class="lb-info"><div class="lb-name">Max T.</div><div class="lb-school">Class 6a</div></div>
+      <div class="lb-right"><div class="lb-pts">3,540</div><div class="lb-streak">🔥 9-day streak</div></div>
+    </div>
+    <div class="lb-row me-row">
+      <div class="lb-rank bronze">3</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#4CAF50,#1B5E20)">👤</div>
+      <div class="lb-info"><div class="lb-name">Jonas M. — You</div><div class="lb-school">Class 5c</div></div>
+      <div class="lb-right"><div class="lb-pts">2,847</div><div class="lb-streak">🔥 12-day streak</div></div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank" style="font-size:16px">4</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#9C27B0,#6A1B9A)">👧</div>
+      <div class="lb-info"><div class="lb-name">Sophie R.</div><div class="lb-school">Class 6b</div></div>
+      <div class="lb-right"><div class="lb-pts">2,210</div><div class="lb-streak">🔥 5-day streak</div></div>
     </div>
   </div>
 </section>
@@ -1127,88 +1091,7 @@ footer{
 </div>
 </div>
 
-<!-- IMPACT -->
-<div style="background:var(--surface)">
-<section id="impact" style="padding:96px 48px;max-width:1100px;margin:0 auto">
-  <div class="section-eyebrow">🏆 Impact & Trust System</div>
-  <h2 class="section-headline">Reliability built into<br/>every data point</h2>
-  <p class="section-sub">Every submission is scored for reliability. Multi-student verification, AI cross-check and historical consistency build a trust layer the city can depend on for planning decisions.</p>
 
-  <div class="impact-grid">
-    <div class="impact-card">
-      <div class="impact-icon">🌍</div>
-      <div class="impact-val">12,483</div>
-      <div class="impact-lbl">Trees in live<br/>city database</div>
-    </div>
-    <div class="impact-card">
-      <div class="impact-icon">⭐</div>
-      <div class="impact-val">94%</div>
-      <div class="impact-lbl">Average data<br/>reliability score</div>
-    </div>
-    <div class="impact-card">
-      <div class="impact-icon">🔥</div>
-      <div class="impact-val">847</div>
-      <div class="impact-lbl">Students with<br/>active streaks</div>
-    </div>
-    <div class="impact-card">
-      <div class="impact-icon">🏅</div>
-      <div class="impact-val">3,200+</div>
-      <div class="impact-lbl">Badges earned<br/>this season</div>
-    </div>
-  </div>
-
-  <!-- Score system -->
-  <div class="score-bars">
-    <div class="score-bar-card">
-      <div class="sb-label"><span>🌳 Impact Score</span><span style="color:var(--green)">1,240</span></div>
-      <div class="sb-track"><div class="sb-fill" style="width:75%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
-      <div class="sb-sub">Based on unique, verified trees mapped this season</div>
-    </div>
-    <div class="score-bar-card">
-      <div class="sb-label"><span>✅ Reliability Bonus</span><span style="color:var(--blue)">940</span></div>
-      <div class="sb-track"><div class="sb-fill" style="width:57%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
-      <div class="sb-sub">Earned when AI + peer verification both confirm your data</div>
-    </div>
-    <div class="score-bar-card">
-      <div class="sb-label"><span>🔥 Streak Multiplier</span><span style="color:var(--amber)">×1.5</span></div>
-      <div class="sb-track"><div class="sb-fill" style="width:40%;background:linear-gradient(90deg,var(--gold),#FDE68A)"></div></div>
-      <div class="sb-sub">12-day streak active — multiplies all points earned today</div>
-    </div>
-  </div>
-
-  <!-- Leaderboard -->
-  <div class="leaderboard-wrap" style="margin-top:28px">
-    <div class="lb-head">
-      <div class="lb-head-title">🏆 School Leaderboard — Giesing-Grundschule</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.4)">Season 3 · May 2026</div>
-    </div>
-    <div class="lb-row">
-      <div class="lb-rank gold">1</div>
-      <div class="lb-avatar" style="background:linear-gradient(135deg,#FF9800,#E65100)">👧</div>
-      <div class="lb-info"><div class="lb-name">Lena K.</div><div class="lb-school">Class 5b</div></div>
-      <div class="lb-right"><div class="lb-pts">4,120</div><div class="lb-streak">🔥 18-day streak</div></div>
-    </div>
-    <div class="lb-row">
-      <div class="lb-rank silver">2</div>
-      <div class="lb-avatar" style="background:linear-gradient(135deg,#2196F3,#1565C0)">👦</div>
-      <div class="lb-info"><div class="lb-name">Max T.</div><div class="lb-school">Class 6a</div></div>
-      <div class="lb-right"><div class="lb-pts">3,540</div><div class="lb-streak">🔥 9-day streak</div></div>
-    </div>
-    <div class="lb-row me-row">
-      <div class="lb-rank bronze">3</div>
-      <div class="lb-avatar" style="background:linear-gradient(135deg,#4CAF50,#1B5E20)">👤</div>
-      <div class="lb-info"><div class="lb-name">Jonas M. — You</div><div class="lb-school">Class 5c</div></div>
-      <div class="lb-right"><div class="lb-pts">2,847</div><div class="lb-streak">🔥 12-day streak</div></div>
-    </div>
-    <div class="lb-row">
-      <div class="lb-rank" style="font-size:16px">4</div>
-      <div class="lb-avatar" style="background:linear-gradient(135deg,#9C27B0,#6A1B9A)">👧</div>
-      <div class="lb-info"><div class="lb-name">Sophie R.</div><div class="lb-school">Class 6b</div></div>
-      <div class="lb-right"><div class="lb-pts">2,210</div><div class="lb-streak">🔥 5-day streak</div></div>
-    </div>
-  </div>
-</section>
-</div>
 
 <!-- CITY VALUE -->
 <div id="city">
@@ -1526,97 +1409,6 @@ footer{
 <!-- ══════════════════════════════════════
      LIVE SIMULATION
 ══════════════════════════════════════ -->
-<div id="simulation">
-<div class="sim-inner">
-  <div class="section-eyebrow" style="color:#7EB3FF">⚡ Live Simulation Mode</div>
-  <h2 class="section-headline" style="color:#fff">Trigger a city event.<br/>Watch the system respond.</h2>
-  <p class="section-sub" style="color:rgba(255,255,255,.6)">
-    This is the full loop in action. Hit a scenario button — the map updates, new missions fire automatically, and the activity feed shows exactly what the city sees in real time.
-  </p>
-
-  <!-- Event buttons -->
-  <div class="sim-controls">
-    <button class="sim-btn storm" onclick="triggerEvent('storm')">⛈ Simulate Storm Event</button>
-    <button class="sim-btn disease" onclick="triggerEvent('disease')">🦠 Simulate Disease Outbreak</button>
-    <button class="sim-btn heatwave" onclick="triggerEvent('heatwave')">☀ Simulate Heatwave Alert</button>
-    <button class="sim-btn reset" onclick="triggerEvent('reset')">↺ Reset</button>
-  </div>
-
-  <div class="sim-grid">
-    <!-- Sim map -->
-    <div class="sim-map" id="sim-map">
-      <div class="sim-map-bg"></div>
-      <!-- Roads -->
-      <div class="sim-road sim-road-h sim-road-main" style="top:44%"></div>
-      <div class="sim-road sim-road-h" style="top:22%;height:9px"></div>
-      <div class="sim-road sim-road-h" style="top:68%;height:9px"></div>
-      <div class="sim-road sim-road-v sim-road-main" style="left:46%"></div>
-      <div class="sim-road sim-road-v" style="left:22%;width:9px"></div>
-      <div class="sim-road sim-road-v" style="left:72%;width:9px"></div>
-
-      <!-- Event overlays (hidden by default) -->
-      <div class="sim-overlay" id="sim-storm-overlay" style="left:15%;top:55%;width:120px;height:100px;border-radius:14px;font-size:40px">⛈</div>
-      <div class="sim-overlay" id="sim-disease-overlay" style="left:55%;top:45%;width:100px;height:100px;background:rgba(185,28,28,.12);border-color:rgba(185,28,28,.6);font-size:32px">🦠</div>
-      <div class="sim-overlay" id="sim-heat-overlay" style="left:30%;top:20%;width:140px;height:100px;border-radius:14px;background:rgba(232,160,32,.12);border-color:rgba(232,160,32,.6);font-size:36px">☀</div>
-
-      <!-- Tree pins -->
-      <div class="sim-pin ok" id="sp-1" style="left:16%;top:12%"><span>🌳</span></div>
-      <div class="sim-pin ok" id="sp-2" style="left:28%;top:15%"><span>🌲</span></div>
-      <div class="sim-pin ok" id="sp-3" style="left:20%;top:30%"><span>🌳</span></div>
-      <div class="sim-pin ok" id="sp-4" style="left:60%;top:22%"><span>🌲</span></div>
-      <div class="sim-pin ok" id="sp-5" style="left:70%;top:55%"><span>🌳</span></div>
-      <div class="sim-pin ok" id="sp-6" style="left:38%;top:62%"><span>🌲</span></div>
-      <div class="sim-pin ok" id="sp-7" style="left:25%;top:72%"><span>🌳</span></div>
-      <div class="sim-pin ok" id="sp-8" style="left:80%;top:35%"><span>🌲</span></div>
-      <div class="sim-pin ok" id="sp-9" style="left:50%;top:15%"><span>🌳</span></div>
-      <div class="sim-pin ok" id="sp-10" style="left:85%;top:65%"><span>🌲</span></div>
-
-      <!-- Mission zone (hidden initially) -->
-      <div id="sim-mission-zone" style="position:absolute;border-radius:12px;border:2px dashed rgba(0,82,204,.7);background:rgba(0,82,204,.08);display:flex;align-items:flex-start;justify-content:flex-end;padding:7px;font-size:9px;font-weight:700;color:rgba(100,160,255,.9);transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1)"></div>
-
-      <!-- Event label bar -->
-      <div class="sim-event-label" id="sim-event-label">
-        <div class="sim-event-indicator" id="sim-event-dot" style="background:#22C55E"></div>
-        <span id="sim-event-text">System nominal — no active events</span>
-      </div>
-    </div>
-
-    <!-- Feed panel -->
-    <div class="sim-feed">
-      <div class="sim-feed-head">
-        <div class="live-dot"></div>
-        LIVE CITY FEED
-      </div>
-      <div class="sim-feed-list" id="sim-feed-list">
-        <div class="sim-feed-item visible">
-          <div class="sfi-icon" style="background:rgba(26,122,60,.2)">✅</div>
-          <div class="sfi-text">
-            <div class="sfi-title">System ready</div>
-            <div class="sfi-sub">847 students online · 12,483 trees monitored</div>
-            <div class="sfi-time">just now</div>
-          </div>
-        </div>
-        <div class="sim-feed-item visible">
-          <div class="sfi-icon" style="background:rgba(0,82,204,.2)">📊</div>
-          <div class="sfi-text">
-            <div class="sfi-title">Daily GIS sync complete</div>
-            <div class="sfi-sub">1,189 new data points pushed to city dashboard</div>
-            <div class="sfi-time">2 min ago</div>
-          </div>
-        </div>
-      </div>
-      <!-- Auto-generated missions panel -->
-      <div class="sim-missions-updated" id="sim-missions-panel">
-        <div class="smu-title">AUTO-GENERATED MISSIONS</div>
-        <div class="smu-item"><div class="smu-dot" style="background:#1A7A3C"></div><span>Inventory check — Schwabing</span><span class="smu-new" id="smu-1">ACTIVE</span></div>
-        <div class="smu-item"><div class="smu-dot" style="background:#1A7A3C"></div><span>Disease patrol — Maxvorstadt</span><span class="smu-new" id="smu-2">ACTIVE</span></div>
-        <div class="smu-item" id="smu-row-3"><div class="smu-dot" id="smu-dot-3" style="background:#666"></div><span id="smu-text-3">Awaiting city events...</span><span class="smu-new" id="smu-3"></span></div>
-        <div class="smu-item" id="smu-row-4" style="display:none"><div class="smu-dot" id="smu-dot-4" style="background:#666"></div><span id="smu-text-4"></span><span class="smu-new" id="smu-4">NEW</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 
 <!-- FOOTER -->
 <footer>
