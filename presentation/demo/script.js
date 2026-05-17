@@ -84,7 +84,7 @@ function initializeMap() {
   try {
     const map = new mapboxgl.Map({
       container: 'mapbox-map',
-      style: 'mapbox://styles/mapbox/outdoors-v12',
+      
       center: [11.57549, 48.13743],
       zoom: 12.2,
       attributionControl: false
@@ -94,10 +94,14 @@ function initializeMap() {
 
     map.on('load', () => {
       const markers = [
-        { coords: [11.57549, 48.13743], emoji: '🌳', title: 'Gesunder Baum' },
+        { coords: [11.574582030529, 48.137252993187545], emoji: '🌳', title: 'Gesunder Baum' },
         { coords: [11.565, 48.135], emoji: '🦠', title: 'Krankheitscluster' },
         { coords: [11.59, 48.145], emoji: '⛈', title: 'Sturmschaden' },
-        { coords: [11.583, 48.128], emoji: '❓', title: 'Fehlend' }
+        { coords: [11.571420540864718, 48.1455229198054], emoji: '❓', title: 'Fehlend' },
+        { coords: [11.563357826917313, 48.145945128260394], emoji: '🌿', title: 'Neupflanzung' },
+        { coords: [11.558493335381147, 48.14739954503796], emoji: '❓', title: 'Fehlend' },
+        { coords: [ 11.563313524014491, 48.146252997053324], emoji: '🦠', title: 'Krankheitscluster' },
+
       ];
 
       markers.forEach(marker => {
@@ -113,11 +117,10 @@ function initializeMap() {
         geometry: {
           type: 'Polygon',
           coordinates: [[
-            [11.565, 48.147],
-            [11.575, 48.147],
+            [11.555, 48.157],
+            [11.575, 48.157],
             [11.575, 48.142],
-            [11.565, 48.142],
-            [11.565, 48.147]
+            [11.555, 48.142]
           ]]
         }
       };
