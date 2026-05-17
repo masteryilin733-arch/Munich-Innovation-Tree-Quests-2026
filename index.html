@@ -1,0 +1,622 @@
+-- Active: 1761754715294@@127.0.0.1@3306
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>München BaumApp — PWA Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<link href="https://unpkg.com/mapbox-gl@latest/dist/mapbox-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/mapbox-gl@latest/dist/mapbox-gl.js"></script>
+</head>
+<body>
+ 
+<div class="phone">
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+ 
+  <!-- Screens -->
+  <div class="screens">
+ 
+    <!-- ══════════════ MAP SCREEN ══════════════ -->
+    <div class="screen active" id="screen-map">
+      <div class="topbar">
+        <div class="topbar-col">
+          <div class="title">BaumKarte</div>
+          <div class="subtitle">München · 12.483 Bäume kartiert</div>
+        </div>
+        <button class="icon-btn">🔍</button>
+        <button class="icon-btn">⚙</button>
+      </div>
+ 
+      <!-- Filter chips -->
+      <div class="map-filter-bar">
+        <div class="filter-chip on">🌿 Alle</div>
+        <div class="filter-chip">🦠 Krank</div>
+        <div class="filter-chip">⛈ Sturmschaden</div>
+        <div class="filter-chip">📋 Fehlend</div>
+        <div class="filter-chip">🎯 Mission</div>
+      </div>
+ 
+      <!-- Map -->
+      <div class="map-canvas">
+        <div id="mapbox-map" class="mapbox-map"></div>
+
+        <!-- FAB -->
+        <button class="map-fab" onclick="setScreen('capture')">📷</button>
+
+        <!-- Legend -->
+        <div class="map-legend">
+          <div class="legend-row"><div class="legend-dot" style="background:var(--green)"></div>Gesunder Baum</div>
+          <div class="legend-row"><div class="legend-dot" style="background:var(--red)"></div>Krankheitscluster</div>
+          <div class="legend-row"><div class="legend-dot" style="background:var(--amber)"></div>Sturmschaden</div>
+          <div class="legend-row"><div class="legend-dot" style="background:rgba(0,82,204,.5)"></div>Missionszone</div>
+          <div class="legend-row"><div class="legend-dot" style="border:2px dashed var(--amber);background:transparent"></div>Fehlend</div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- ══════════════ CAPTURE SCREEN ══════════════ -->
+    <div class="screen" id="screen-capture">
+      <div class="topbar">
+        <button class="icon-btn" style="margin-right:4px" onclick="setScreen('map')">←</button>
+        <div class="topbar-col">
+          <div class="title">Baum erfassen</div>
+          <div class="subtitle">KI-unterstützte Analyse aktiv</div>
+        </div>
+      </div>
+ 
+      <!-- 3-step bar -->
+      <div class="steps-bar">
+        <div class="step-item">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="step-dot done">✓</div>
+            <div class="step-label">Foto</div>
+          </div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-item">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="step-dot active">2</div>
+            <div class="step-label">KI-Analyse</div>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="step-dot">3</div>
+            <div class="step-label">Details</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Viewfinder -->
+      <div class="capture-viewfinder">
+        <div style="font-size:60px">🌳</div>
+        <div class="viewfinder-frame">
+          <div class="vf-corner vf-tl"></div>
+          <div class="vf-corner vf-tr"></div>
+          <div class="vf-corner vf-bl"></div>
+          <div class="vf-corner vf-br"></div>
+          <div class="vf-crosshair" style="top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        </div>
+        <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:4px 10px;border-radius:20px;white-space:nowrap">
+          📏 Stamm im Rahmen zentrieren
+        </div>
+      </div>
+ 
+      <div class="scroll" style="padding:14px">
+ 
+        <!-- AI Educator card -->
+        <div class="ai-card">
+          <div class="ai-badge">✨ KI-Educator</div>
+          <div style="font-size:12px;line-height:1.5">
+            Diese Eiche zeigt typische Symptome des <strong>Eichenprozessionsspinners</strong>. Achte auf nesterartige Gespinste am Stamm und kahle Äste. Melde Befall sofort — der Grünflächenreferent priorisiert Einsätze innerhalb 48h.
+          </div>
+        </div>
+ 
+        <!-- AI species suggestion -->
+        <div class="card" style="padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:10px">🤖 KI-Artenvorschlag</div>
+          <div class="ai-species-row">
+            <div class="ai-species-opt selected">
+              <div class="pct">87%</div>
+              <div class="name">Stieleiche<br><em style="font-size:9px">Quercus robur</em></div>
+            </div>
+            <div class="ai-species-opt">
+              <div class="pct">9%</div>
+              <div class="name">Traubeneiche<br><em style="font-size:9px">Q. petraea</em></div>
+            </div>
+            <div class="ai-species-opt">
+              <div class="pct">4%</div>
+              <div class="name">Roteiche<br><em style="font-size:9px">Q. rubra</em></div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Condition estimation -->
+        <div class="card" style="padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:8px">📊 Zustandsschätzung (KI)</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+                <span>Vitalität</span><span style="color:var(--amber);font-weight:600">Mittel — 62%</span>
+              </div>
+              <div style="height:8px;background:var(--surface);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:62%;background:linear-gradient(90deg,var(--gold),#FDD835);border-radius:4px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+                <span>Schäden sichtbar</span><span style="color:var(--red);font-weight:600">Hoch — 78%</span>
+              </div>
+              <div style="height:8px;background:var(--surface);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:78%;background:linear-gradient(90deg,var(--red),#EF5350);border-radius:4px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+                <span>Kronenintegrität</span><span style="color:var(--green);font-weight:600">Gut — 71%</span>
+              </div>
+              <div style="height:8px;background:var(--surface);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:71%;background:linear-gradient(90deg,var(--green),#66BB6A);border-radius:4px"></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding:8px;background:var(--red-lt);border-radius:8px;font-size:11px;color:var(--red)">
+            ⚠ Empfehlung: Dringend melden — Schädlingsbefall wahrscheinlich
+          </div>
+        </div>
+ 
+        <button style="width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)">
+          Weiter zu Details →
+        </button>
+      </div>
+    </div>
+ 
+    <!-- ══════════════ MISSIONS SCREEN ══════════════ -->
+    <div class="screen" id="screen-missions">
+      <div class="mission-hero">
+        <div style="font-size:13px;opacity:.75;margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase">Stadtauftrag</div>
+        <div style="font-family:var(--font-display);font-size:24px;line-height:1.2">Missionen & <br>Prioritäten</div>
+        <div class="mission-stats-row">
+          <div class="m-stat">
+            <div class="val">4</div>
+            <div class="lbl">Aktiv</div>
+          </div>
+          <div class="m-stat">
+            <div class="val">12</div>
+            <div class="lbl">Erledigt</div>
+          </div>
+          <div class="m-stat">
+            <div class="val">2.4k</div>
+            <div class="lbl">XP verdient</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Mission tabs -->
+      <div class="mission-tabs">
+        <button class="m-tab active">🔥 Aktiv</button>
+        <button class="m-tab">🏙 Stadt</button>
+        <button class="m-tab">✅ Erledigt</button>
+      </div>
+ 
+      <div class="scroll" style="padding:14px">
+ 
+        <!-- City priority banner -->
+        <div class="city-priority-banner">
+          🏛 <strong>München Grünflächenamt</strong> — Schwerpunkt diese Woche: Schädlingserfassung Maxvorstadt
+        </div>
+ 
+        <!-- Mission cards -->
+        <div class="mission-card">
+          <div class="mission-card-header">
+            <div class="mission-icon" style="background:var(--red-lt)">🦠</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div style="font-size:13px;font-weight:600;color:var(--ink)">Krankheitscluster erfassen</div>
+                <div class="pill pill-red">DRINGEND</div>
+              </div>
+              <div style="font-size:11px;color:var(--ink3);margin-top:3px">Maxvorstadt · Radius 800m</div>
+            </div>
+          </div>
+          <div class="mission-card-body">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+              Kartiere alle befallenen Eichen im Cluster. Grünflächenamt braucht Daten für Behandlungsplan.
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-size:11px;color:var(--ink3)">7 / 15 Bäume</div>
+              <div style="font-size:11px;font-weight:600;color:var(--blue)">+350 XP</div>
+            </div>
+            <div class="mission-progress"><div class="mission-progress-fill" style="width:47%"></div></div>
+          </div>
+          <div class="mission-reward-row">
+            🏅 Schädlingsdetektiv-Badge &nbsp;|&nbsp; 🌱 Baum gerettet (×7) &nbsp;|&nbsp; ⏰ 3 Tage übrig
+          </div>
+        </div>
+ 
+        <div class="mission-card">
+          <div class="mission-card-header">
+            <div class="mission-icon" style="background:var(--amber-lt)">⛈</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div style="font-size:13px;font-weight:600;color:var(--ink)">Sturmschäden dokumentieren</div>
+                <div class="pill pill-amber">NEU</div>
+              </div>
+              <div style="font-size:11px;color:var(--ink3);margin-top:3px">Nymphenburg · 12 Standorte</div>
+            </div>
+          </div>
+          <div class="mission-card-body">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+              Nach dem Unwetter vom 14.5. müssen Bruchschäden erfasst werden. Fotos + Zustand.
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-size:11px;color:var(--ink3)">2 / 12 Standorte</div>
+              <div style="font-size:11px;font-weight:600;color:var(--blue)">+280 XP</div>
+            </div>
+            <div class="mission-progress"><div class="mission-progress-fill" style="width:17%"></div></div>
+          </div>
+          <div class="mission-reward-row">
+            🌪 Krisenhelfer-Badge &nbsp;|&nbsp; 📍 Stadtpriorität hoch
+          </div>
+        </div>
+ 
+        <div class="mission-card">
+          <div class="mission-card-header">
+            <div class="mission-icon" style="background:var(--blue-lt)">📋</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div style="font-size:13px;font-weight:600;color:var(--ink)">Inventarlücken schließen</div>
+                <div class="pill pill-blue">LAUFEND</div>
+              </div>
+              <div style="font-size:11px;color:var(--ink3);margin-top:3px">Schwabing · 23 fehlende Einträge</div>
+            </div>
+          </div>
+          <div class="mission-card-body">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+              Das digitale Inventar hat Lücken. Fotografiere und identifiziere nicht kartierte Bäume.
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-size:11px;color:var(--ink3)">11 / 23 Bäume</div>
+              <div style="font-size:11px;font-weight:600;color:var(--blue)">+180 XP</div>
+            </div>
+            <div class="mission-progress"><div class="mission-progress-fill" style="width:48%"></div></div>
+          </div>
+          <div class="mission-reward-row">
+            🗺 Kartograf-Badge &nbsp;|&nbsp; 7 Tage übrig
+          </div>
+        </div>
+ 
+        <div class="mission-card">
+          <div class="mission-card-header">
+            <div class="mission-icon" style="background:var(--green-lt)">🎓</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div style="font-size:13px;font-weight:600;color:var(--ink)">Schule des Monats</div>
+                <div class="pill pill-green">TEAM</div>
+              </div>
+              <div style="font-size:11px;color:var(--ink3);margin-top:3px">Giesing-Grundschule · 8 Schüler</div>
+            </div>
+          </div>
+          <div class="mission-card-body">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+              Schulteam-Challenge: Wer sammelt die meisten verifizierten Einträge in 30 Tagen?
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-size:11px;color:var(--ink3)">43 / 100 Einträge</div>
+              <div style="font-size:11px;font-weight:600;color:var(--blue)">+500 XP Team</div>
+            </div>
+            <div class="mission-progress"><div class="mission-progress-fill" style="width:43%"></div></div>
+          </div>
+          <div class="mission-reward-row">
+            🏆 Schulpokal &nbsp;|&nbsp; 📰 Stadtzeitung Feature &nbsp;|&nbsp; 17 Tage
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    <!-- ══════════════ RANKING SCREEN ══════════════ -->
+    <div class="screen" id="screen-ranking">
+      <div class="rank-hero">
+        <div style="font-size:13px;opacity:.65;margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase">Saison 3 · Mai 2026</div>
+        <div style="font-family:var(--font-display);font-size:22px">Dein Rang: #3 🥉</div>
+ 
+        <div class="score-ring-row">
+          <div class="score-ring">
+            <div class="ring-val">2.847</div>
+            <div class="ring-lbl">Impact Score</div>
+          </div>
+          <div class="score-ring">
+            <div class="ring-val">94%</div>
+            <div class="ring-lbl">Zuverlässigkeit</div>
+          </div>
+          <div class="score-ring">
+            <div class="ring-val">Lv.8</div>
+            <div class="ring-lbl">Baumspezialist</div>
+          </div>
+        </div>
+ 
+        <!-- Streak -->
+        <div style="font-size:10px;opacity:.65;margin-top:14px;margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase">🔥 12-Tage-Serie</div>
+        <div class="streak-bar">
+          <div class="streak-day done">Mo</div>
+          <div class="streak-day done">Di</div>
+          <div class="streak-day done">Mi</div>
+          <div class="streak-day done">Do</div>
+          <div class="streak-day done">Fr</div>
+          <div class="streak-day today">Sa</div>
+          <div class="streak-day miss">So</div>
+        </div>
+      </div>
+ 
+      <div class="scroll" style="padding:0">
+        <!-- School leaderboard -->
+        <div style="padding:12px 16px 6px;font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase">Schulrangliste · Giesing-Grundschule</div>
+ 
+        <div style="background:var(--card);border-radius:0;margin-bottom:1px">
+ 
+          <div class="leaderboard-item">
+            <div class="rank-num gold">1</div>
+            <div class="rank-avatar" style="background:linear-gradient(135deg,#FF9800,#E65100)">👧</div>
+            <div class="rank-info">
+              <div class="rank-name">Lena K.</div>
+              <div class="rank-school">Kl. 5b · 🔥 18 Tage</div>
+            </div>
+            <div class="rank-scores">
+              <div class="rank-pts">4.120</div>
+              <div class="rank-badges"><div class="level-chip">⭐ Lv.11</div></div>
+            </div>
+          </div>
+ 
+          <div class="leaderboard-item">
+            <div class="rank-num silver">2</div>
+            <div class="rank-avatar" style="background:linear-gradient(135deg,#2196F3,#1565C0)">👦</div>
+            <div class="rank-info">
+              <div class="rank-name">Max T.</div>
+              <div class="rank-school">Kl. 6a · 🔥 9 Tage</div>
+            </div>
+            <div class="rank-scores">
+              <div class="rank-pts">3.540</div>
+              <div class="rank-badges"><div class="level-chip">⭐ Lv.10</div></div>
+            </div>
+          </div>
+ 
+          <div class="leaderboard-item me">
+            <div class="rank-num bronze">3</div>
+            <div class="rank-avatar">👤</div>
+            <div class="rank-info">
+              <div class="rank-name">Du · Jonas M.</div>
+              <div class="rank-school">Kl. 5c · 🔥 12 Tage</div>
+            </div>
+            <div class="rank-scores">
+              <div class="rank-pts">2.847</div>
+              <div class="rank-badges"><div class="level-chip">⭐ Lv.8</div></div>
+            </div>
+          </div>
+ 
+          <div class="leaderboard-item">
+            <div class="rank-num" style="font-size:14px">4</div>
+            <div class="rank-avatar" style="background:linear-gradient(135deg,#9C27B0,#6A1B9A)">👧</div>
+            <div class="rank-info">
+              <div class="rank-name">Sophie R.</div>
+              <div class="rank-school">Kl. 6b · 🔥 5 Tage</div>
+            </div>
+            <div class="rank-scores">
+              <div class="rank-pts">2.210</div>
+              <div class="rank-badges"><div class="level-chip">⭐ Lv.7</div></div>
+            </div>
+          </div>
+ 
+          <div class="leaderboard-item">
+            <div class="rank-num" style="font-size:14px">5</div>
+            <div class="rank-avatar" style="background:linear-gradient(135deg,#4CAF50,#1B5E20)">👦</div>
+            <div class="rank-info">
+              <div class="rank-name">Felix B.</div>
+              <div class="rank-school">Kl. 4a · 🔥 3 Tage</div>
+            </div>
+            <div class="rank-scores">
+              <div class="rank-pts">1.890</div>
+              <div class="rank-badges"><div class="level-chip">⭐ Lv.6</div></div>
+            </div>
+          </div>
+ 
+        </div>
+ 
+        <!-- Impact breakdown -->
+        <div style="padding:12px 16px 6px;font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase">Score-Aufschlüsselung</div>
+        <div class="card" style="margin:0 12px 12px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>🌳 Impact Score</span><span style="font-weight:600;color:var(--green)">1.240 Pkt</span>
+              </div>
+              <div style="height:6px;background:var(--surface);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:75%;background:var(--green);border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>✅ Zuverlässigkeits-Bonus</span><span style="font-weight:600;color:var(--blue)">940 Pkt</span>
+              </div>
+              <div style="height:6px;background:var(--surface);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:57%;background:var(--blue);border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>🔥 Serien-Multiplikator (×1.5)</span><span style="font-weight:600;color:var(--amber)">667 Pkt</span>
+              </div>
+              <div style="height:6px;background:var(--surface);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:40%;background:var(--amber);border-radius:3px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    <!-- ══════════════ ME SCREEN ══════════════ -->
+    <div class="screen" id="screen-me">
+      <div class="me-hero">
+        <div class="me-avatar-wrap">
+          <div class="me-avatar">🧑</div>
+          <div class="me-level-bar">
+            <div style="font-family:var(--font-display);font-size:20px">Jonas M.</div>
+            <div style="font-size:11px;opacity:.8;margin-top:2px">Giesing-Grundschule · Kl. 5c</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+              <span style="font-size:10px;opacity:.7">Lv.8</span>
+              <div class="me-level-track" style="flex:1">
+                <div class="me-level-fill" style="width:68%"></div>
+              </div>
+              <span style="font-size:10px;opacity:.7">Lv.9</span>
+            </div>
+            <div style="font-size:10px;opacity:.65;margin-top:4px">680 / 1000 XP zur nächsten Stufe</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:14px;flex-wrap:wrap">
+          <div class="pill" style="background:rgba(255,255,255,.15);color:#fff">🔥 12 Tage</div>
+          <div class="pill" style="background:rgba(255,255,255,.15);color:#fff">🦠 Detektor</div>
+          <div class="pill" style="background:rgba(255,255,255,.15);color:#fff">🗺 Kartograf</div>
+          <div class="pill" style="background:rgba(255,255,255,.15);color:#fff">⭐ Baumspezialist</div>
+        </div>
+      </div>
+ 
+      <div class="scroll" style="padding:14px">
+ 
+        <!-- Stats grid -->
+        <div class="me-stats-grid" style="margin-bottom:12px">
+          <div class="me-stat">
+            <div class="val">142</div>
+            <div class="lbl">Bäume erfasst</div>
+          </div>
+          <div class="me-stat">
+            <div class="val">94%</div>
+            <div class="lbl">Zuverlässigkeit</div>
+          </div>
+          <div class="me-stat">
+            <div class="val">12</div>
+            <div class="lbl">Missionen ✅</div>
+          </div>
+        </div>
+ 
+        <!-- Personal impact -->
+        <div style="font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">🌍 Mein Beitrag</div>
+        <div class="impact-row">
+          <div class="impact-card">
+            <div class="ival">142</div>
+            <div class="ilbl">Bäume kartiert</div>
+          </div>
+          <div class="impact-card">
+            <div class="ival">23t</div>
+            <div class="ilbl">CO₂ gebunden</div>
+          </div>
+          <div class="impact-card">
+            <div class="ival">7</div>
+            <div class="ilbl">Bäume gerettet</div>
+          </div>
+        </div>
+ 
+        <!-- Activity history -->
+        <div style="font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">📋 Letzte Aktivitäten</div>
+        <div class="card" style="padding:12px 14px">
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--red-lt)">🦠</div>
+            <div class="activity-info">
+              <div class="activity-title">Befallene Eiche gemeldet</div>
+              <div class="activity-sub">Maxvorstadt · Vor 2h · Verifiziert ✓</div>
+            </div>
+            <div class="activity-pts">+85 XP</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--amber-lt)">⛈</div>
+            <div class="activity-info">
+              <div class="activity-title">Sturmschaden dokumentiert</div>
+              <div class="activity-sub">Nymphenburg · Gestern · Verifiziert ✓</div>
+            </div>
+            <div class="activity-pts">+60 XP</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--green-lt)">🌳</div>
+            <div class="activity-info">
+              <div class="activity-title">3 neue Bäume kartiert</div>
+              <div class="activity-sub">Schwabing · 14. Mai · Ausstehend ⏳</div>
+            </div>
+            <div class="activity-pts">+45 XP</div>
+          </div>
+          <div class="activity-item" style="border-bottom:none">
+            <div class="activity-dot" style="background:var(--gold-lt)">🏅</div>
+            <div class="activity-info">
+              <div class="activity-title">Badge: Schädlingsdetektiv</div>
+              <div class="activity-sub">Mission abgeschlossen · 12. Mai</div>
+            </div>
+            <div class="activity-pts" style="color:var(--gold)">+200 XP</div>
+          </div>
+        </div>
+ 
+        <!-- Settings -->
+        <div style="font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">⚙ Einstellungen</div>
+        <div class="card" style="padding:12px 14px">
+          <div class="settings-item">
+            <div class="s-icon">🔔</div>
+            <div class="s-text">Benachrichtigungen</div>
+            <div class="s-arrow">›</div>
+          </div>
+          <div class="settings-item">
+            <div class="s-icon">🌍</div>
+            <div class="s-text">Sprache & Region</div>
+            <div class="s-arrow">›</div>
+          </div>
+          <div class="settings-item">
+            <div class="s-icon">🔒</div>
+            <div class="s-text">Datenschutz</div>
+            <div class="s-arrow">›</div>
+          </div>
+          <div class="settings-item" style="border-bottom:none">
+            <div class="s-icon">📤</div>
+            <div class="s-text">Meine Daten exportieren</div>
+            <div class="s-arrow">›</div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+  </div><!-- /screens -->
+ 
+  <!-- Bottom Nav -->
+  <div class="nav">
+    <button class="nav-btn active" id="nav-map" onclick="setScreen('map')">
+      <div class="nav-icon">🗺</div>
+      <span>Karte</span>
+    </button>
+    <button class="nav-btn" id="nav-capture" onclick="setScreen('capture')">
+      <div class="nav-icon">📷</div>
+      <span>Erfassen</span>
+    </button>
+    <button class="nav-btn" id="nav-missions" onclick="setScreen('missions')">
+      <div class="nav-icon">🎯</div>
+      <span>Missionen</span>
+    </button>
+    <button class="nav-btn" id="nav-ranking" onclick="setScreen('ranking')">
+      <div class="nav-icon">🏆</div>
+      <span>Rangliste</span>
+    </button>
+    <button class="nav-btn" id="nav-me" onclick="setScreen('me')">
+      <div class="nav-icon">👤</div>
+      <span>Ich</span>
+    </button>
+  </div>
+</div>
+ 
+<script src="script.js"></script>
+</body>
+</html>
