@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BaumIntel — Student-Powered Urban Tree Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --ink:#0D1117;
+  --ink2:#3D4551;
+  --ink3:#8B949E;
+  --surface:#F8F7F2;
+  --card:#FFFFFF;
+  --blue:#0052CC;
+  --blue-dk:#003D99;
+  --blue-lt:#E8F0FC;
+  --gold:#E8A020;
+  --gold-lt:#FDF3DC;
+  --green:#1A7A3C;
+  --green-lt:#E6F4EC;
+  --red:#B91C1C;
+  --red-lt:#FEE2E2;
+  --amber:#C05C00;
+  --amber-lt:#FEF3C7;
+  --border:#E5E1D8;
+  --r:16px;
+  --r-sm:10px;
+  --font-display:'Playfair Display',serif;
+  --font-ui:'Syne',sans-serif;
+}
+
+body{
+  font-family:var(--font-ui);
+  background:var(--surface);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+  background:rgba(248,247,242,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--font-display);font-size:22px;font-weight:900;
+  color:var(--ink);display:flex;align-items:center;gap:8px;
+}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  font-size:13px;font-weight:600;color:var(--ink2);
+  text-decoration:none;letter-spacing:.3px;
+  transition:color .15s;
+}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{
+  padding:9px 20px;background:var(--blue);color:#fff;
+  border:none;border-radius:8px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:var(--font-ui);letter-spacing:.3px;
+  transition:background .15s;text-decoration:none;display:inline-block;
+}
+.nav-cta:hover{background:var(--blue-dk)}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  padding:64px 0 0;
+  display:flex;flex-direction:column;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.hero-glow{
+  position:absolute;
+  width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(0,82,204,.35) 0%,transparent 70%);
+  top:-200px;right:-200px;
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(26,122,60,.25) 0%,transparent 70%);
+  bottom:100px;left:-100px;
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  max-width:1100px;margin:0 auto;
+  padding:80px 48px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,82,204,.2);border:1px solid rgba(0,82,204,.4);
+  padding:5px 14px;border-radius:20px;
+  font-size:11px;font-weight:700;color:#7EB3FF;
+  letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.hero-headline{
+  font-family:var(--font-display);
+  font-size:clamp(38px,4.5vw,58px);
+  font-weight:900;line-height:1.1;
+  color:#fff;margin-bottom:20px;
+}
+.hero-headline em{
+  font-style:italic;
+  background:linear-gradient(135deg,#4C9EFF,#00D4AA);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:16px;color:rgba(255,255,255,.65);
+  line-height:1.7;margin-bottom:36px;
+  font-weight:400;
+}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{
+  padding:14px 28px;background:var(--blue);color:#fff;
+  border:none;border-radius:10px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:var(--font-ui);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 4px 24px rgba(0,82,204,.4);
+}
+.btn-primary:hover{background:var(--blue-dk);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,82,204,.5)}
+.btn-ghost{
+  padding:14px 28px;background:rgba(255,255,255,.08);color:#fff;
+  border:1px solid rgba(255,255,255,.2);border-radius:10px;
+  font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-ui);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+
+.hero-stats{
+  display:flex;gap:28px;margin-top:44px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,.1);
+}
+.h-stat .val{
+  font-family:var(--font-display);font-size:32px;font-weight:900;
+  color:#fff;line-height:1;
+}
+.h-stat .lbl{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px;font-weight:500;letter-spacing:.5px}
+
+/* Hero map preview */
+.hero-map-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+  position:relative;
+}
+.hero-map-inner{
+  height:420px;background:#1C2A1C;
+  position:relative;overflow:hidden;
+}
+.hm-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+.hm-road{position:absolute;background:#2A3A2A}
+.hm-road-h{height:10px;left:0;right:0}
+.hm-road-v{width:10px;top:0;bottom:0}
+.hm-road-main{height:18px;background:#243024}
+
+.hm-pin{
+  position:absolute;width:30px;height:30px;
+  border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.hm-pin:hover{transform:rotate(-45deg) scale(1.25);box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.hm-pin span{transform:rotate(45deg);font-size:14px}
+.hm-pin.healthy{background:#1A7A3C}
+.hm-pin.sick{background:#B91C1C}
+
+.hm-cluster{
+  position:absolute;border-radius:50%;
+  border:2px dashed rgba(185,28,28,.7);
+  background:rgba(185,28,28,.1);
+}
+.hm-storm{
+  position:absolute;border-radius:10px;
+  background:rgba(192,92,0,.15);border:1px solid rgba(192,92,0,.5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  animation:storm-flicker 2.5s ease-in-out infinite;
+}
+@keyframes storm-flicker{0%,100%{opacity:1}50%{opacity:.5}}
+.hm-missing{
+  position:absolute;border-radius:50%;
+  border:2px dashed rgba(232,160,32,.7);
+  background:rgba(232,160,32,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:rgba(232,160,32,.9);
+  flex-direction:column;text-align:center;
+}
+.hm-zone{
+  position:absolute;border-radius:12px;
+  border:2px dashed rgba(0,82,204,.6);
+  background:rgba(0,82,204,.08);
+  display:flex;align-items:flex-start;justify-content:flex-end;
+  padding:7px;font-size:9px;font-weight:700;color:rgba(100,160,255,.8);
+}
+
+.hm-pulse-dot{
+  position:absolute;width:12px;height:12px;border-radius:50%;
+  background:var(--red);
+  animation:pulse-dot 1.5s ease-out infinite;
+}
+@keyframes pulse-dot{
+  0%{box-shadow:0 0 0 0 rgba(185,28,28,.6)}
+  70%{box-shadow:0 0 0 14px rgba(185,28,28,0)}
+  100%{box-shadow:0 0 0 0 rgba(185,28,28,0)}
+}
+
+/* Tree popup */
+.tree-popup{
+  position:absolute;
+  background:rgba(10,20,10,.95);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;padding:12px 14px;
+  width:180px;z-index:10;
+  backdrop-filter:blur(8px);
+  transition:opacity .2s;
+  pointer-events:none;
+}
+.tree-popup.visible{opacity:1}
+.tree-popup.hidden{opacity:0}
+.tp-species{font-size:12px;font-weight:700;color:#fff;margin-bottom:6px}
+.tp-row{display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px}
+.tp-lbl{color:rgba(255,255,255,.5)}
+.tp-val{color:rgba(255,255,255,.9);font-weight:600}
+.tp-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:2px 7px;border-radius:10px;
+  font-size:9px;font-weight:700;margin-top:6px;
+}
+
+.hm-bar{
+  padding:10px 14px;display:flex;gap:12px;
+  background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);
+  flex-wrap:wrap;
+}
+.hm-legend{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,.55);font-weight:500}
+.hm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── SECTION WRAPPER ── */
+section{padding:96px 48px;max-width:1100px;margin:0 auto}
+.section-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:14px;
+}
+.section-headline{
+  font-family:var(--font-display);
+  font-size:clamp(28px,3vw,42px);font-weight:900;
+  line-height:1.15;color:var(--ink);margin-bottom:16px;
+}
+.section-sub{
+  font-size:16px;color:var(--ink2);line-height:1.7;
+  max-width:560px;margin-bottom:52px;
+}
+
+/* ── MISSIONS ── */
+#missions{background:var(--surface)}
+.missions-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.mission-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);overflow:hidden;
+  transition:transform .2s,box-shadow .2s;cursor:pointer;
+}
+.mission-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1)}
+.mc-header{padding:20px 20px 14px;display:flex;gap:12px;align-items:flex-start}
+.mc-icon{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.mc-body{padding:0 20px 20px}
+.mc-title{font-size:14px;font-weight:700;color:var(--ink)}
+.mc-sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.mc-desc{font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+.mc-progress-track{height:6px;background:#F0EDE6;border-radius:3px;overflow:hidden;margin-bottom:8px}
+.mc-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),#4C8EFF)}
+.mc-meta{display:flex;justify-content:space-between;align-items:center}
+.diff-pill{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;
+}
+.reward-tag{font-size:11px;font-weight:700;color:var(--blue)}
+
+/* ── AI PANEL ── */
+#ai-panel{background:var(--ink);padding:96px 0;overflow:hidden}
+.ai-inner{max-width:1100px;margin:0 auto;padding:0 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.ai-visual{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:24px;position:relative;
+}
+.ai-chat-msg{
+  display:flex;gap:10px;margin-bottom:16px;
+}
+.ai-avatar{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),#4C8EFF);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.ai-bubble{
+  background:rgba(255,255,255,.07);border-radius:0 12px 12px 12px;
+  padding:12px 14px;font-size:12px;color:rgba(255,255,255,.85);
+  line-height:1.65;border:1px solid rgba(255,255,255,.08);
+  position:relative;
+}
+.ai-bubble strong{color:#7EB3FF}
+.ai-bubble.typing::after{
+  content:'●●●';font-size:10px;color:rgba(255,255,255,.4);
+  animation:typing .8s infinite;
+}
+@keyframes typing{0%,100%{opacity:.3}50%{opacity:1}}
+.ai-confidence{
+  display:flex;gap:6px;margin-top:10px;
+}
+.ai-conf-opt{
+  flex:1;background:rgba(255,255,255,.06);border-radius:8px;
+  padding:8px;text-align:center;border:1px solid rgba(255,255,255,.08);
+  transition:all .2s;cursor:pointer;
+}
+.ai-conf-opt:hover,.ai-conf-opt.on{
+  background:rgba(0,82,204,.25);border-color:rgba(0,82,204,.5);
+}
+.ai-conf-opt .cpct{font-size:16px;font-weight:800;color:#fff}
+.ai-conf-opt .cname{font-size:9px;color:rgba(255,255,255,.55);margin-top:2px}
+.ai-cond-row{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.ai-cond-item{display:flex;align-items:center;gap:10px}
+.ai-cond-lbl{font-size:10px;color:rgba(255,255,255,.5);width:80px;flex-shrink:0}
+.ai-cond-bar{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.ai-cond-fill{height:100%;border-radius:3px}
+.ai-cond-pct{font-size:10px;font-weight:700;width:32px;text-align:right;flex-shrink:0}
+
+/* ── IMPACT ── */
+#impact{background:var(--surface)}
+.impact-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px;
+}
+.impact-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px 20px;text-align:center;
+  transition:transform .2s;
+}
+.impact-card:hover{transform:translateY(-3px)}
+.impact-icon{font-size:32px;margin-bottom:12px}
+.impact-val{
+  font-family:var(--font-display);font-size:36px;font-weight:900;
+  color:var(--blue);line-height:1;margin-bottom:6px;
+}
+.impact-lbl{font-size:12px;color:var(--ink2);font-weight:500;line-height:1.4}
+
+/* Leaderboard */
+.leaderboard-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+.lb-head{
+  padding:18px 24px;background:var(--ink);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.lb-head-title{font-family:var(--font-display);font-size:18px;color:#fff}
+.lb-row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 24px;border-bottom:1px solid var(--border);
+  transition:background .15s;cursor:pointer;
+}
+.lb-row:hover{background:var(--blue-lt)}
+.lb-row:last-child{border-bottom:none}
+.lb-row.me-row{background:var(--blue-lt)}
+.lb-rank{width:28px;font-family:var(--font-display);font-size:20px;color:var(--ink3);text-align:center}
+.lb-rank.gold{color:#C49A00}
+.lb-rank.silver{color:#888}
+.lb-rank.bronze{color:#B07040}
+.lb-avatar{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.lb-info{flex:1}
+.lb-name{font-size:13px;font-weight:700;color:var(--ink)}
+.lb-school{font-size:10px;color:var(--ink3);margin-top:1px}
+.lb-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.lb-pts{font-family:var(--font-display);font-size:18px;color:var(--blue)}
+.lb-streak{font-size:10px;color:var(--amber);font-weight:700}
+
+/* Score bars */
+.score-bars{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px;
+}
+.score-bar-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:18px;
+}
+.sb-label{font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:12px;display:flex;justify-content:space-between}
+.sb-track{height:10px;background:#F0EDE6;border-radius:5px;overflow:hidden;margin-bottom:6px}
+.sb-fill{height:100%;border-radius:5px}
+.sb-sub{font-size:10px;color:var(--ink3)}
+
+/* ── CITY VALUE ── */
+#city{background:var(--ink);padding:96px 0}
+.city-inner{max-width:1100px;margin:0 auto;padding:0 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.city-cards{display:flex;flex-direction:column;gap:14px}
+.city-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-sm);padding:18px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+  transition:background .2s;cursor:default;
+}
+.city-card:hover{background:rgba(255,255,255,.08)}
+.city-card-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(0,82,204,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.city-card-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.city-card-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+.city-export{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:20px;margin-top:14px;
+}
+.export-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:10px;letter-spacing:.5px}
+.export-code{
+  font-family:monospace;font-size:11px;color:#7EB3FF;
+  background:rgba(0,0,0,.3);padding:14px;border-radius:8px;
+  line-height:1.8;overflow-x:auto;
+}
+
+/* ── HOW IT WORKS ── */
+#how{background:var(--surface)}
+.flow-track{
+  display:flex;align-items:stretch;gap:0;
+  position:relative;margin-top:8px;
+}
+.flow-step{
+  flex:1;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px 22px;
+  display:flex;flex-direction:column;gap:12px;
+  position:relative;
+  transition:transform .2s,box-shadow .2s;
+}
+.flow-step:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1)}
+.flow-step+.flow-step{margin-left:12px}
+.flow-num{
+  font-family:var(--font-display);font-size:40px;font-weight:900;
+  color:var(--blue);opacity:.15;line-height:1;
+  position:absolute;top:16px;right:16px;
+}
+.flow-icon{font-size:28px;margin-bottom:4px}
+.flow-title{font-size:14px;font-weight:800;color:var(--ink)}
+.flow-desc{font-size:12px;color:var(--ink2);line-height:1.6}
+.flow-arrow{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink3);font-size:20px;flex-shrink:0;
+  margin-top:-4px;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);padding:48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-logo{font-family:var(--font-display);font-size:20px;font-weight:900;color:#fff}
+.footer-logo span{color:var(--blue)}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px}
+.footer-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,82,204,.2);border:1px solid rgba(0,82,204,.4);
+  padding:10px 18px;border-radius:10px;
+  font-size:12px;font-weight:700;color:#7EB3FF;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(32px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.fade-up{animation:fade-up .7s ease both}
+.fade-up-1{animation-delay:.1s}
+.fade-up-2{animation-delay:.2s}
+.fade-up-3{animation-delay:.3s}
+.fade-up-4{animation-delay:.4s}
+
+/* ══════════════════════════════════════════
+   CITY CONTROL PANEL
+══════════════════════════════════════════ */
+#city-panel{background:var(--ink);padding:96px 0;overflow:hidden}
+.city-panel-inner{max-width:1200px;margin:0 auto;padding:0 48px}
+.city-panel-grid{display:grid;grid-template-columns:340px 1fr;gap:28px;margin-top:48px;align-items:start}
+
+/* Sidebar: request composer */
+.cp-sidebar{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+}
+.cp-sidebar-head{
+  padding:16px 20px;
+  background:rgba(0,82,204,.25);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:12px;font-weight:700;color:#7EB3FF;
+  letter-spacing:.5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.cp-form-row{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.cp-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.cp-select{
+  width:100%;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);border-radius:8px;
+  padding:9px 12px;color:#fff;font-size:12px;font-family:var(--font-ui);
+  cursor:pointer;outline:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,.4)'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+}
+.cp-select option{background:#1A2030}
+.cp-priority-row{display:flex;gap:6px;margin-top:6px}
+.cp-prio-btn{
+  flex:1;padding:7px 4px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);border-radius:8px;
+  font-size:10px;font-weight:700;color:rgba(255,255,255,.5);
+  cursor:pointer;text-align:center;transition:all .15s;font-family:var(--font-ui);
+}
+.cp-prio-btn.sel-low{background:rgba(26,122,60,.25);border-color:rgba(26,122,60,.5);color:#4ADE80}
+.cp-prio-btn.sel-med{background:rgba(232,160,32,.25);border-color:rgba(232,160,32,.5);color:#FCD34D}
+.cp-prio-btn.sel-high{background:rgba(185,28,28,.25);border-color:rgba(185,28,28,.5);color:#FCA5A5}
+.cp-generate-btn{
+  width:calc(100% - 40px);margin:16px 20px;
+  padding:12px;background:var(--blue);border:none;border-radius:10px;
+  color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-ui);
+  transition:all .2s;
+}
+.cp-generate-btn:hover{background:var(--blue-dk);transform:translateY(-1px)}
+.cp-generate-btn.generating{background:#1A3A6A;cursor:wait}
+
+/* Main: mission output */
+.cp-main{display:flex;flex-direction:column;gap:16px}
+.cp-mission-output{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;overflow:hidden;
+  transition:all .3s;
+}
+.cp-mission-head{
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cp-mission-title{font-size:13px;font-weight:700;color:#fff;display:flex;gap:8px;align-items:center}
+.cp-mission-body{padding:16px 18px;font-size:12px;color:rgba(255,255,255,.65);line-height:1.65}
+.cp-mission-footer{
+  padding:10px 18px;background:rgba(255,255,255,.03);
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;gap:10px;flex-wrap:wrap;
+}
+.cp-tag{
+  padding:3px 9px;border-radius:8px;font-size:10px;font-weight:700;
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);
+}
+.cp-new-badge{
+  background:rgba(0,82,204,.3);border:1px solid rgba(0,82,204,.5);
+  color:#7EB3FF;padding:3px 9px;border-radius:8px;font-size:10px;font-weight:700;
+  animation:badge-pop .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes badge-pop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.cp-request-log{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:14px 16px;
+  font-family:monospace;font-size:11px;color:rgba(255,255,255,.5);
+  line-height:1.8;max-height:120px;overflow-y:auto;
+}
+.cp-request-log .log-line{display:flex;gap:10px}
+.cp-request-log .log-time{color:rgba(0,82,204,.8);flex-shrink:0}
+.cp-request-log .log-ok{color:#4ADE80}
+.cp-request-log .log-warn{color:#FCD34D}
+
+/* ══════════════════════════════════════════
+   DATA PIPELINE
+══════════════════════════════════════════ */
+#pipeline{background:var(--surface);padding:96px 0;overflow:hidden}
+.pipeline-inner{max-width:1100px;margin:0 auto;padding:0 48px}
+.pipeline-visual{
+  margin-top:48px;
+  background:var(--ink);border-radius:24px;
+  padding:40px;overflow:hidden;position:relative;
+}
+.pipeline-visual::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.pipeline-track{
+  display:flex;align-items:center;gap:0;
+  position:relative;z-index:1;
+}
+.pipeline-node{
+  flex:1;text-align:center;position:relative;
+}
+.pipeline-node-icon{
+  width:64px;height:64px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin:0 auto 12px;
+  border:2px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.06);
+  position:relative;z-index:2;
+  transition:all .4s;
+}
+.pipeline-node-icon.active{
+  border-color:var(--blue);
+  background:rgba(0,82,204,.25);
+  box-shadow:0 0 24px rgba(0,82,204,.4);
+}
+.pipeline-node-icon.done{
+  border-color:#22C55E;
+  background:rgba(34,197,94,.15);
+  box-shadow:0 0 16px rgba(34,197,94,.3);
+}
+.pipeline-node-label{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.pipeline-node-sub{font-size:10px;color:rgba(255,255,255,.4);line-height:1.4}
+.pipeline-connector{
+  flex:0 0 60px;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.pipeline-wire{
+  width:100%;height:2px;background:rgba(255,255,255,.1);
+  position:relative;overflow:hidden;
+}
+.pipeline-packet{
+  position:absolute;top:-3px;left:-12px;
+  width:12px;height:8px;border-radius:4px;
+  background:var(--blue);
+  box-shadow:0 0 8px var(--blue);
+  animation:packet-flow 2s linear infinite;
+  opacity:0;
+}
+.pipeline-packet.flowing{opacity:1}
+@keyframes packet-flow{
+  0%{left:-12px;opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{left:calc(100% + 4px);opacity:0}
+}
+.packet-delay-1{animation-delay:.5s}
+.packet-delay-2{animation-delay:1s}
+.packet-delay-3{animation-delay:1.5s}
+
+/* Packet data side panel */
+.pipeline-detail{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-top:28px;position:relative;z-index:1;
+}
+.pd-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:14px;text-align:center;
+  transition:all .3s;
+}
+.pd-card.lit{
+  background:rgba(0,82,204,.15);border-color:rgba(0,82,204,.4);
+  box-shadow:0 0 20px rgba(0,82,204,.2);
+}
+.pd-icon{font-size:22px;margin-bottom:8px}
+.pd-val{font-family:var(--font-display);font-size:22px;color:#fff;font-weight:900}
+.pd-label{font-size:10px;color:rgba(255,255,255,.4);margin-top:3px}
+.pd-live{
+  display:inline-flex;align-items:center;gap:4px;margin-top:6px;
+  font-size:9px;color:rgba(34,197,94,.8);font-weight:700;
+}
+.live-dot{
+  width:6px;height:6px;border-radius:50%;background:#22C55E;
+  animation:live-blink 1s ease-in-out infinite;
+}
+@keyframes live-blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ══════════════════════════════════════════
+   LIVE SIMULATION
+══════════════════════════════════════════ */
+#simulation{
+  background:linear-gradient(180deg,var(--ink) 0%,#0A1628 100%);
+  padding:96px 0;overflow:hidden;position:relative;
+}
+#simulation::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle at 20% 50%,rgba(0,82,204,.12) 0%,transparent 50%),
+    radial-gradient(circle at 80% 30%,rgba(185,28,28,.08) 0%,transparent 50%);
+}
+.sim-inner{max-width:1200px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
+
+.sim-controls{
+  display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;
+}
+.sim-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 20px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.06);
+  color:#fff;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:var(--font-ui);
+  transition:all .2s;
+}
+.sim-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
+.sim-btn.storm{border-color:rgba(192,92,0,.5);background:rgba(192,92,0,.12)}
+.sim-btn.storm:hover{background:rgba(192,92,0,.22);box-shadow:0 4px 20px rgba(192,92,0,.3)}
+.sim-btn.disease{border-color:rgba(185,28,28,.5);background:rgba(185,28,28,.12)}
+.sim-btn.disease:hover{background:rgba(185,28,28,.22);box-shadow:0 4px 20px rgba(185,28,28,.3)}
+.sim-btn.heatwave{border-color:rgba(232,160,32,.5);background:rgba(232,160,32,.12)}
+.sim-btn.heatwave:hover{background:rgba(232,160,32,.22);box-shadow:0 4px 20px rgba(232,160,32,.3)}
+.sim-btn.reset{border-color:rgba(255,255,255,.2)}
+.sim-btn.active-event{
+  animation:event-pulse 1s ease-in-out infinite;
+}
+@keyframes event-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.4)}
+  50%{box-shadow:0 0 0 8px rgba(185,28,28,0)}
+}
+
+.sim-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+
+/* Sim map */
+.sim-map{
+  background:#141E14;border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;position:relative;
+  height:460px;
+}
+.sim-map-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  background-color:#141E14;
+}
+.sim-road{position:absolute;background:#1E2A1E}
+.sim-road-h{height:12px;left:0;right:0}
+.sim-road-v{width:12px;top:0;bottom:0}
+.sim-road-main{background:#182018;height:20px}
+
+/* Event overlays */
+.sim-overlay{
+  position:absolute;border-radius:50%;
+  background:rgba(192,92,0,.15);
+  border:2px dashed rgba(192,92,0,.6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;
+  transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.sim-overlay.show{transform:scale(1)}
+
+.sim-pin{
+  position:absolute;width:28px;height:28px;
+  border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .4s,box-shadow .4s;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.sim-pin span{transform:rotate(45deg);font-size:12px}
+.sim-pin.ok{background:#1A7A3C}
+.sim-pin.warn{background:#B91C1C;animation:warn-shake .4s ease}
+.sim-pin.caution{background:#C05C00;animation:warn-shake .4s ease}
+@keyframes warn-shake{
+  0%,100%{transform:rotate(-45deg)}
+  25%{transform:rotate(-50deg) scale(1.1)}
+  75%{transform:rotate(-40deg) scale(1.1)}
+}
+
+.sim-event-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  padding:10px 16px;display:flex;align-items:center;gap:10px;
+  font-size:12px;color:#fff;font-weight:600;
+  transform:translateY(100%);transition:transform .4s ease;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.sim-event-label.show{transform:translateY(0)}
+.sim-event-indicator{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  animation:live-blink 1s ease-in-out infinite;
+}
+
+/* Sim feed panel */
+.sim-feed{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.sim-feed-head{
+  padding:14px 18px;background:rgba(0,82,204,.2);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:11px;font-weight:700;color:#7EB3FF;
+  letter-spacing:.5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.sim-feed-list{flex:1;overflow-y:auto;padding:0}
+.sim-feed-list::-webkit-scrollbar{width:0}
+.sim-feed-item{
+  padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.05);
+  opacity:0;transform:translateX(20px);
+  transition:opacity .4s ease,transform .4s ease;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.sim-feed-item.visible{opacity:1;transform:translateX(0)}
+.sfi-icon{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.sfi-text{flex:1}
+.sfi-title{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
+.sfi-sub{font-size:10px;color:rgba(255,255,255,.4);line-height:1.4}
+.sfi-time{font-size:9px;color:rgba(255,255,255,.25);margin-top:3px}
+
+/* Sim mission updates */
+.sim-missions-updated{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:12px 18px;
+}
+.smu-title{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.smu-item{
+  display:flex;align-items:center;gap:8px;padding:6px 0;
+  font-size:11px;color:rgba(255,255,255,.7);
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.smu-item:last-child{border-bottom:none}
+.smu-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.smu-new{
+  margin-left:auto;font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:6px;
+  background:rgba(0,82,204,.3);color:#7EB3FF;
+  opacity:0;transition:opacity .4s ease;
+}
+.smu-new.show{opacity:1}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE ADDITIONS
+══════════════════════════════════════════ */
+/* ── RESPONSIVE ── */
+@media(max-width:800px){
+  .city-panel-grid{grid-template-columns:1fr}
+  .pipeline-track{flex-wrap:wrap}
+  .pipeline-connector{flex:0 0 30px;transform:rotate(90deg)}
+  .pipeline-detail{grid-template-columns:1fr 1fr}
+  .sim-grid{grid-template-columns:1fr}
+  .sim-map{height:300px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🌳 Baum<span>Intel</span></div>
+  <div class="nav-links">
+    <a href="#demo">Live Demo</a>
+    <a href="#missions">Missions</a>
+    <a href="#city-panel">City Panel</a>
+    <a href="#pipeline">Data Pipeline</a>
+    <a href="#simulation">⚡ Simulate</a>
+    <a href="#impact">Impact</a>
+  </div>
+  <a href="#simulation" class="nav-cta" style="background:var(--red)">⚡ Live Sim</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="fade-up fade-up-1">
+      <div class="hero-eyebrow">🌍 Munich Urban Forestry Initiative</div>
+      <h1 class="hero-headline">
+        Student-powered<br/><em>urban tree</em><br/>intelligence system
+      </h1>
+      <p class="hero-sub">
+        Helping cities like Munich maintain real-time tree data using AI + student missions — transforming civic engagement into a live GIS dataset.
+      </p>
+      <div class="hero-btns">
+        <a href="#demo" class="btn-primary">🚀 Try Demo Map</a>
+        <a href="#missions" class="btn-ghost">🎯 View Missions</a>
+        <a href="#how" class="btn-ghost">🧠 How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="val">12,483</div>
+          <div class="lbl">Trees mapped</div>
+        </div>
+        <div class="h-stat">
+          <div class="val">847</div>
+          <div class="lbl">Students active</div>
+        </div>
+        <div class="h-stat">
+          <div class="val">94%</div>
+          <div class="lbl">Data accuracy</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini map in hero -->
+    <div class="hero-map-card fade-up fade-up-2" id="demo">
+      <div class="hero-map-inner">
+        <div class="hm-grid"></div>
+        <!-- Roads -->
+        <div class="hm-road hm-road-h hm-road-main" style="top:42%"></div>
+        <div class="hm-road hm-road-h" style="top:22%;height:8px"></div>
+        <div class="hm-road hm-road-h" style="top:68%;height:8px"></div>
+        <div class="hm-road hm-road-v hm-road-main" style="left:47%"></div>
+        <div class="hm-road hm-road-v" style="left:22%;width:8px"></div>
+        <div class="hm-road hm-road-v" style="left:72%;width:8px"></div>
+        <!-- Mission zone -->
+        <div class="hm-zone" style="left:10%;top:8%;width:40%;height:30%">MISSION ALPHA</div>
+        <!-- Diseased cluster -->
+        <div class="hm-cluster" style="left:58%;top:50%;width:80px;height:80px;transform:translate(-50%,-50%)"></div>
+        <!-- Storm hotspot -->
+        <div class="hm-storm" style="left:20%;top:60%;width:72px;height:52px;transform:translate(-50%,-50%)">⛈</div>
+        <!-- Missing inventory -->
+        <div class="hm-missing" style="right:6%;top:18%;width:70px;height:70px;transform:translateY(-50%)">
+          <span style="font-size:18px">❓</span><span style="font-size:8px;margin-top:2px">No Data</span>
+        </div>
+        <!-- Healthy pins -->
+        <div class="hm-pin healthy" style="left:16%;top:13%" onclick="showPopup(this,'Linden','Healthy','2d ago','97%','#1A7A3C')"><span>🌳</span></div>
+        <div class="hm-pin healthy" style="left:28%;top:17%" onclick="showPopup(this,'Oak','Good','5d ago','91%','#1A7A3C')"><span>🌲</span></div>
+        <div class="hm-pin healthy" style="left:22%;top:30%" onclick="showPopup(this,'Maple','Healthy','1d ago','99%','#1A7A3C')"><span>🌳</span></div>
+        <div class="hm-pin healthy" style="left:62%;top:24%" onclick="showPopup(this,'Beech','Good','3d ago','88%','#1A7A3C')"><span>🌲</span></div>
+        <div class="hm-pin healthy" style="left:72%;top:58%" onclick="showPopup(this,'Birch','Healthy','6h ago','96%','#1A7A3C')"><span>🌳</span></div>
+        <div class="hm-pin healthy" style="left:38%;top:63%" onclick="showPopup(this,'Oak','Fair','2d ago','82%','#1A7A3C')"><span>🌲</span></div>
+        <!-- Sick pins -->
+        <div class="hm-pin sick" style="left:54%;top:45%" onclick="showPopup(this,'Oak — Diseased','Critical','8d ago','71%','#B91C1C')"><span>🦠</span></div>
+        <div class="hm-pin sick" style="left:63%;top:53%" onclick="showPopup(this,'Oak — Diseased','Critical','10d ago','68%','#B91C1C')"><span>🦠</span></div>
+        <div class="hm-pulse-dot" style="left:calc(54% + 9px);top:calc(45% + 9px)"></div>
+        <!-- Popup -->
+        <div class="tree-popup hidden" id="tree-popup">
+          <div class="tp-species" id="tp-species">Linden Tree</div>
+          <div class="tp-row"><span class="tp-lbl">Condition</span><span class="tp-val" id="tp-cond">Healthy</span></div>
+          <div class="tp-row"><span class="tp-lbl">Last check</span><span class="tp-val" id="tp-date">2d ago</span></div>
+          <div class="tp-row"><span class="tp-lbl">Reliability</span><span class="tp-val" id="tp-rel">97%</span></div>
+          <div class="tp-badge" id="tp-badge" style="background:rgba(26,122,60,.2);color:#4ADE80">✓ AI Verified</div>
+        </div>
+      </div>
+      <div class="hm-bar">
+        <div class="hm-legend"><div class="hm-dot" style="background:#1A7A3C"></div>Healthy tree</div>
+        <div class="hm-legend"><div class="hm-dot" style="background:#B91C1C"></div>Disease cluster</div>
+        <div class="hm-legend"><div class="hm-dot" style="background:#C05C00;border-radius:2px"></div>Storm damage</div>
+        <div class="hm-legend"><div class="hm-dot" style="background:rgba(0,82,204,.5)"></div>Mission zone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSIONS -->
+<div style="background:var(--surface)">
+<section id="missions" style="padding:96px 48px;max-width:1100px;margin:0 auto">
+  <div class="section-eyebrow">🎯 Engagement Engine</div>
+  <h2 class="section-headline">Missions translate city priorities<br/>into student action</h2>
+  <p class="section-sub">Each mission is a direct request from the city's Grünflächenamt — translated by AI into a gamified, rewarded task that students can complete on foot.</p>
+
+  <div class="missions-grid">
+    <div class="mission-card">
+      <div class="mc-header">
+        <div class="mc-icon" style="background:var(--red-lt)">🦠</div>
+        <div>
+          <div class="mc-title">Verify 3 trees near you</div>
+          <div class="mc-sub">Maxvorstadt · Disease check</div>
+        </div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-desc">Photograph and assess three oaks within 500m. AI will flag likely pest infestation for city follow-up within 48h.</div>
+        <div class="mc-progress-track"><div class="mc-progress-fill" style="width:47%"></div></div>
+        <div class="mc-meta">
+          <div class="diff-pill" style="background:var(--red-lt);color:var(--red)">⚡ Urgent</div>
+          <div class="reward-tag">+350 XP · 🏅 Badge</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mission-card">
+      <div class="mc-header">
+        <div class="mc-icon" style="background:var(--gold-lt)">❓</div>
+        <div>
+          <div class="mc-title">Find missing trees in your area</div>
+          <div class="mc-sub">Schwabing · 23 unmapped trees</div>
+        </div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-desc">GIS inventory shows gaps in this district. Walk the route, photograph and tag each unregistered tree to fill the dataset.</div>
+        <div class="mc-progress-track"><div class="mc-progress-fill" style="width:62%"></div></div>
+        <div class="mc-meta">
+          <div class="diff-pill" style="background:var(--blue-lt);color:var(--blue)">📍 Ongoing</div>
+          <div class="reward-tag">+180 XP · 🗺 Cartographer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mission-card">
+      <div class="mc-header">
+        <div class="mc-icon" style="background:var(--amber-lt)">⛈</div>
+        <div>
+          <div class="mc-title">Check storm damage zone</div>
+          <div class="mc-sub">Nymphenburg · Post-storm survey</div>
+        </div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-desc">After last week's storm, 12 sites need damage assessment. Document broken limbs, uprooting risk and structural failure.</div>
+        <div class="mc-progress-track"><div class="mc-progress-fill" style="width:17%"></div></div>
+        <div class="mc-meta">
+          <div class="diff-pill" style="background:var(--amber-lt);color:var(--amber)">🌪 New</div>
+          <div class="reward-tag">+280 XP · 🌪 Responder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- AI PANEL -->
+<div id="ai-panel">
+<div class="ai-inner">
+  <div>
+    <div class="section-eyebrow" style="color:#7EB3FF">🤖 AI Intelligence Layer</div>
+    <h2 class="section-headline" style="color:#fff">AI educates, identifies<br/>and validates — instantly</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6)">
+      Every photo triggers a full AI analysis: species identification with confidence scoring, health condition estimation across three axes, and a contextual educator note drawn from Munich's urban forestry knowledge base.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(0,82,204,.3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🔬</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px">Species recognition at 87%+ accuracy</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.5">Trained on Munich's 12,000+ tree inventory with Latin taxonomy</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(0,82,204,.3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">📊</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px">Condition scored across 3 axes</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.5">Vitality · visible damage · crown integrity — each 0–100%</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(0,82,204,.3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎓</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px">Educational context per capture</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.5">Students learn botany and urban ecology while collecting data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-visual">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px">🧠 AI Insight — Live Analysis</div>
+    <div class="ai-chat-msg">
+      <div class="ai-avatar">🤖</div>
+      <div class="ai-bubble">
+        This is likely a <strong>Linden tree (Tilia cordata)</strong>, commonly planted across Munich for its urban resilience and heat tolerance. The crown structure suggests 40–60 years of age.
+      </div>
+    </div>
+    <div class="ai-chat-msg">
+      <div class="ai-avatar">⚠</div>
+      <div class="ai-bubble" style="border-color:rgba(185,28,28,.3);background:rgba(185,28,28,.1)">
+        I notice <strong style="color:#FCA5A5">web-like deposits near the trunk base</strong> — this is consistent with early-stage <strong style="color:#FCA5A5">Linden aphid infestation</strong>. I recommend flagging for the Grünflächenamt within 48h.
+      </div>
+    </div>
+    <!-- Species options -->
+    <div style="font-size:10px;color:rgba(255,255,255,.4);margin:10px 0 6px;font-weight:600">SPECIES CONFIDENCE</div>
+    <div class="ai-confidence">
+      <div class="ai-conf-opt on" onclick="toggleConf(this)">
+        <div class="cpct">87%</div><div class="cname">Tilia cordata</div>
+      </div>
+      <div class="ai-conf-opt" onclick="toggleConf(this)">
+        <div class="cpct">9%</div><div class="cname">Tilia platyphyllos</div>
+      </div>
+      <div class="ai-conf-opt" onclick="toggleConf(this)">
+        <div class="cpct">4%</div><div class="cname">Tilia tomentosa</div>
+      </div>
+    </div>
+    <!-- Condition bars -->
+    <div style="font-size:10px;color:rgba(255,255,255,.4);margin:14px 0 8px;font-weight:600">CONDITION ESTIMATION</div>
+    <div class="ai-cond-row">
+      <div class="ai-cond-item">
+        <div class="ai-cond-lbl">Vitality</div>
+        <div class="ai-cond-bar"><div class="ai-cond-fill" style="width:62%;background:linear-gradient(90deg,#FBBF24,#F59E0B)"></div></div>
+        <div class="ai-cond-pct" style="color:#F59E0B">62%</div>
+      </div>
+      <div class="ai-cond-item">
+        <div class="ai-cond-lbl">Damage</div>
+        <div class="ai-cond-bar"><div class="ai-cond-fill" style="width:78%;background:linear-gradient(90deg,#EF4444,#B91C1C)"></div></div>
+        <div class="ai-cond-pct" style="color:#EF4444">78%</div>
+      </div>
+      <div class="ai-cond-item">
+        <div class="ai-cond-lbl">Crown</div>
+        <div class="ai-cond-bar"><div class="ai-cond-fill" style="width:71%;background:linear-gradient(90deg,#22C55E,#16A34A)"></div></div>
+        <div class="ai-cond-pct" style="color:#22C55E">71%</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- IMPACT -->
+<div style="background:var(--surface)">
+<section id="impact" style="padding:96px 48px;max-width:1100px;margin:0 auto">
+  <div class="section-eyebrow">🏆 Impact & Trust System</div>
+  <h2 class="section-headline">Reliability built into<br/>every data point</h2>
+  <p class="section-sub">Every submission is scored for reliability. Multi-student verification, AI cross-check and historical consistency build a trust layer the city can depend on for planning decisions.</p>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-icon">🌍</div>
+      <div class="impact-val">12,483</div>
+      <div class="impact-lbl">Trees in live<br/>city database</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">⭐</div>
+      <div class="impact-val">94%</div>
+      <div class="impact-lbl">Average data<br/>reliability score</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">🔥</div>
+      <div class="impact-val">847</div>
+      <div class="impact-lbl">Students with<br/>active streaks</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">🏅</div>
+      <div class="impact-val">3,200+</div>
+      <div class="impact-lbl">Badges earned<br/>this season</div>
+    </div>
+  </div>
+
+  <!-- Score system -->
+  <div class="score-bars">
+    <div class="score-bar-card">
+      <div class="sb-label"><span>🌳 Impact Score</span><span style="color:var(--green)">1,240</span></div>
+      <div class="sb-track"><div class="sb-fill" style="width:75%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+      <div class="sb-sub">Based on unique, verified trees mapped this season</div>
+    </div>
+    <div class="score-bar-card">
+      <div class="sb-label"><span>✅ Reliability Bonus</span><span style="color:var(--blue)">940</span></div>
+      <div class="sb-track"><div class="sb-fill" style="width:57%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
+      <div class="sb-sub">Earned when AI + peer verification both confirm your data</div>
+    </div>
+    <div class="score-bar-card">
+      <div class="sb-label"><span>🔥 Streak Multiplier</span><span style="color:var(--amber)">×1.5</span></div>
+      <div class="sb-track"><div class="sb-fill" style="width:40%;background:linear-gradient(90deg,var(--gold),#FDE68A)"></div></div>
+      <div class="sb-sub">12-day streak active — multiplies all points earned today</div>
+    </div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="leaderboard-wrap" style="margin-top:28px">
+    <div class="lb-head">
+      <div class="lb-head-title">🏆 School Leaderboard — Giesing-Grundschule</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4)">Season 3 · May 2026</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank gold">1</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#FF9800,#E65100)">👧</div>
+      <div class="lb-info"><div class="lb-name">Lena K.</div><div class="lb-school">Class 5b</div></div>
+      <div class="lb-right"><div class="lb-pts">4,120</div><div class="lb-streak">🔥 18-day streak</div></div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank silver">2</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#2196F3,#1565C0)">👦</div>
+      <div class="lb-info"><div class="lb-name">Max T.</div><div class="lb-school">Class 6a</div></div>
+      <div class="lb-right"><div class="lb-pts">3,540</div><div class="lb-streak">🔥 9-day streak</div></div>
+    </div>
+    <div class="lb-row me-row">
+      <div class="lb-rank bronze">3</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#4CAF50,#1B5E20)">👤</div>
+      <div class="lb-info"><div class="lb-name">Jonas M. — You</div><div class="lb-school">Class 5c</div></div>
+      <div class="lb-right"><div class="lb-pts">2,847</div><div class="lb-streak">🔥 12-day streak</div></div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank" style="font-size:16px">4</div>
+      <div class="lb-avatar" style="background:linear-gradient(135deg,#9C27B0,#6A1B9A)">👧</div>
+      <div class="lb-info"><div class="lb-name">Sophie R.</div><div class="lb-school">Class 6b</div></div>
+      <div class="lb-right"><div class="lb-pts">2,210</div><div class="lb-streak">🔥 5-day streak</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CITY VALUE -->
+<div id="city">
+<div class="city-inner">
+  <div>
+    <div class="section-eyebrow" style="color:#7EB3FF">🏙 For City Administrations</div>
+    <h2 class="section-headline" style="color:#fff">A live GIS feed,<br/>not a one-time survey</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6)">
+      BaumIntel replaces expensive, infrequent manual inspections with a continuously updated, student-verified tree health dataset — ready to export in the formats your GIS team already uses.
+    </p>
+    <div class="city-export">
+      <div class="export-title">📤 GeoJSON Export — Live Preview</div>
+      <div class="export-code">
+{<br/>
+&nbsp;&nbsp;"type": "FeatureCollection",<br/>
+&nbsp;&nbsp;"features": [{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"type": "Feature",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"properties": {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"species": "Tilia cordata",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"condition": "fair",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"reliability": 0.94,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"last_verified": "2026-05-17",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"flag": "pest_suspected"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"geometry": { "type": "Point",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coordinates": [11.5761, 48.1372]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;}]<br/>
+}
+      </div>
+    </div>
+  </div>
+
+  <div class="city-cards">
+    <div class="city-card">
+      <div class="city-card-icon">🔍</div>
+      <div>
+        <div class="city-card-title">Reduces manual inspections by 70%</div>
+        <div class="city-card-desc">Student missions pre-triage the entire city canopy. Arborists only deploy where the data shows confirmed risk.</div>
+      </div>
+    </div>
+    <div class="city-card">
+      <div class="city-card-icon">📍</div>
+      <div>
+        <div class="city-card-title">Improves GIS accuracy continuously</div>
+        <div class="city-card-desc">Every student submission updates the live map. Inventory gaps close in days, not annual survey cycles.</div>
+      </div>
+    </div>
+    <div class="city-card">
+      <div class="city-card-icon">🌿</div>
+      <div>
+        <div class="city-card-title">Supports environmental planning</div>
+        <div class="city-card-desc">Health trends, species distribution and disease cluster data feed directly into green infrastructure strategy.</div>
+      </div>
+    </div>
+    <div class="city-card">
+      <div class="city-card-icon">📤</div>
+      <div>
+        <div class="city-card-title">Exports data in GeoJSON & CSV</div>
+        <div class="city-card-desc">One-click export in formats compatible with QGIS, ArcGIS, and Munich's existing municipal GIS platform.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div style="background:var(--surface)">
+<section id="how" style="padding:96px 48px;max-width:1100px;margin:0 auto">
+  <div class="section-eyebrow">🧭 The System</div>
+  <h2 class="section-headline">Five steps from city priority<br/>to actionable insight</h2>
+  <p class="section-sub">A complete loop: city defines what matters, AI makes it a game, students collect the data, AI validates it, and the city receives a live dashboard.</p>
+
+  <div class="flow-track">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-icon">🏛</div>
+      <div class="flow-title">City defines priorities</div>
+      <div class="flow-desc">Grünflächenamt uploads inspection targets, flagged zones and seasonal priorities to the dashboard.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-icon">🤖</div>
+      <div class="flow-title">AI converts into missions</div>
+      <div class="flow-desc">Language model translates technical priorities into gamified student missions with rewards and clear objectives.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-icon">📷</div>
+      <div class="flow-title">Students collect data</div>
+      <div class="flow-desc">Students photograph trees in the field. AI guides them live — species ID, condition check, geo-tagging.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-icon">✅</div>
+      <div class="flow-title">AI + peers validate</div>
+      <div class="flow-desc">Each submission is cross-checked by AI and optionally peer-reviewed, building a reliability score.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-icon">📊</div>
+      <div class="flow-title">City receives insights</div>
+      <div class="flow-desc">Live GIS feed, exportable GeoJSON, disease cluster alerts and health trend reports — updated in real time.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════════════
+     CITY CONTROL PANEL
+══════════════════════════════════════ -->
+<div id="city-panel">
+<div class="city-panel-inner">
+  <div class="section-eyebrow" style="color:#7EB3FF">🏛 City Control Panel</div>
+  <h2 class="section-headline" style="color:#fff">How cities turn priorities<br/>into student missions</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.6);margin-bottom:0">
+    The Grünflächenamt logs into a simple dashboard, defines what needs attention, hits generate — and BaumIntel's AI writes the mission brief, sets the reward, and publishes it to students within seconds.
+  </p>
+
+  <div class="city-panel-grid">
+    <!-- Sidebar: request form -->
+    <div class="cp-sidebar">
+      <div class="cp-sidebar-head">🏛 Grünflächenamt — Request Builder</div>
+      <div class="cp-form-row">
+        <div class="cp-label">Issue Type</div>
+        <select class="cp-select" id="cp-issue">
+          <option value="disease">🦠 Disease / Pest Infestation</option>
+          <option value="storm">⛈ Storm Damage Assessment</option>
+          <option value="inventory">📋 Missing Inventory Data</option>
+          <option value="heatwave">☀ Heatwave Stress Check</option>
+          <option value="pruning">✂ Pruning Priority Survey</option>
+        </select>
+      </div>
+      <div class="cp-form-row">
+        <div class="cp-label">District</div>
+        <select class="cp-select" id="cp-district">
+          <option>Maxvorstadt</option>
+          <option>Schwabing</option>
+          <option>Nymphenburg</option>
+          <option>Giesing</option>
+          <option>Haidhausen</option>
+          <option>Bogenhausen</option>
+        </select>
+      </div>
+      <div class="cp-form-row">
+        <div class="cp-label">Priority Level</div>
+        <div class="cp-priority-row">
+          <button class="cp-prio-btn" onclick="setPrio(this,'low')">🟢 Low</button>
+          <button class="cp-prio-btn sel-med" onclick="setPrio(this,'med')">🟡 Medium</button>
+          <button class="cp-prio-btn" onclick="setPrio(this,'high')">🔴 High</button>
+        </div>
+      </div>
+      <div class="cp-form-row">
+        <div class="cp-label">Target Trees</div>
+        <select class="cp-select">
+          <option>All species</option>
+          <option>Oaks (Quercus)</option>
+          <option>Lindens (Tilia)</option>
+          <option>Maples (Acer)</option>
+          <option>Beeches (Fagus)</option>
+        </select>
+      </div>
+      <div class="cp-form-row">
+        <div class="cp-label">Reward Budget</div>
+        <select class="cp-select">
+          <option>Standard — 150–350 XP</option>
+          <option>Priority — 400–600 XP + Badge</option>
+          <option>Emergency — 700+ XP + Trophy</option>
+        </select>
+      </div>
+      <button class="cp-generate-btn" id="cp-gen-btn" onclick="generateMission()">
+        ✨ Generate Mission with AI
+      </button>
+    </div>
+
+    <!-- Main: output -->
+    <div class="cp-main" id="cp-output">
+
+      <!-- Existing missions -->
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px">ACTIVE MISSIONS — PUBLISHED</div>
+
+      <div class="cp-mission-output">
+        <div class="cp-mission-head">
+          <div class="cp-mission-title">🦠 Krankheitscluster erfassen — Maxvorstadt</div>
+          <span class="cp-tag" style="color:var(--red);background:rgba(185,28,28,.2)">URGENT</span>
+        </div>
+        <div class="cp-mission-body">
+          Photograph and assess all oaks showing signs of pest infestation within an 800m radius. AI will automatically cluster submissions to build a disease-spread heatmap for the arborist team.
+        </div>
+        <div class="cp-mission-footer">
+          <div class="cp-tag">🌳 Target: Oak</div>
+          <div class="cp-tag">📍 Maxvorstadt</div>
+          <div class="cp-tag">+350 XP</div>
+          <div class="cp-tag">🏅 Badge unlock</div>
+          <div class="cp-tag">👥 14 students active</div>
+        </div>
+      </div>
+
+      <div class="cp-mission-output">
+        <div class="cp-mission-head">
+          <div class="cp-mission-title">📋 Inventarlücken schließen — Schwabing</div>
+          <span class="cp-tag">ONGOING</span>
+        </div>
+        <div class="cp-mission-body">
+          GPS-verified 23 unmapped tree locations in Schwabing district. Walk the pre-loaded route, photograph each tree, confirm species using AI suggestion, and submit.
+        </div>
+        <div class="cp-mission-footer">
+          <div class="cp-tag">🗺 All species</div>
+          <div class="cp-tag">📍 Schwabing</div>
+          <div class="cp-tag">+180 XP</div>
+          <div class="cp-tag">👥 8 students active</div>
+        </div>
+      </div>
+
+      <!-- Request log -->
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">SYSTEM LOG</div>
+      <div class="cp-request-log" id="cp-log">
+        <div class="log-line"><span class="log-time">09:14:02</span><span class="log-ok">✓</span><span>Mission #47 published — 14 students notified</span></div>
+        <div class="log-line"><span class="log-time">09:02:18</span><span class="log-ok">✓</span><span>GeoJSON export triggered by city admin</span></div>
+        <div class="log-line"><span class="log-time">08:55:41</span><span class="log-ok">✓</span><span>Mission #46 verified — 23/23 trees confirmed</span></div>
+        <div class="log-line"><span class="log-time">08:30:07</span><span class="log-warn">!</span><span>Disease cluster flagged — arborist alert sent</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     DATA PIPELINE
+══════════════════════════════════════ -->
+<div id="pipeline" style="background:var(--surface)">
+<div class="pipeline-inner">
+  <div class="section-eyebrow">⚡ Data Pipeline</div>
+  <h2 class="section-headline">From student photo to<br/>city GIS in under 60 seconds</h2>
+  <p class="section-sub">Every submission travels a fully automated pipeline. Watch the data flow live — each packet carries species, condition, coordinates and reliability metadata.</p>
+
+  <div class="pipeline-visual">
+    <div class="pipeline-track">
+      <!-- Node 1 -->
+      <div class="pipeline-node">
+        <div class="pipeline-node-icon done" id="pn-1">📷</div>
+        <div class="pipeline-node-label">Student Photo</div>
+        <div class="pipeline-node-sub">GPS tagged<br/>+ timestamp</div>
+      </div>
+      <!-- Wire -->
+      <div class="pipeline-connector">
+        <div class="pipeline-wire">
+          <div class="pipeline-packet flowing"></div>
+          <div class="pipeline-packet flowing packet-delay-1"></div>
+        </div>
+      </div>
+      <!-- Node 2 -->
+      <div class="pipeline-node">
+        <div class="pipeline-node-icon active" id="pn-2">🤖</div>
+        <div class="pipeline-node-label">AI Analysis</div>
+        <div class="pipeline-node-sub">Species ID<br/>Condition score</div>
+      </div>
+      <!-- Wire -->
+      <div class="pipeline-connector">
+        <div class="pipeline-wire">
+          <div class="pipeline-packet flowing packet-delay-2"></div>
+        </div>
+      </div>
+      <!-- Node 3 -->
+      <div class="pipeline-node">
+        <div class="pipeline-node-icon" id="pn-3">✅</div>
+        <div class="pipeline-node-label">Validation</div>
+        <div class="pipeline-node-sub">Peer review<br/>+ reliability score</div>
+      </div>
+      <!-- Wire -->
+      <div class="pipeline-connector">
+        <div class="pipeline-wire">
+          <div class="pipeline-packet flowing packet-delay-3"></div>
+        </div>
+      </div>
+      <!-- Node 4 -->
+      <div class="pipeline-node">
+        <div class="pipeline-node-icon" id="pn-4">🗺</div>
+        <div class="pipeline-node-label">City GIS</div>
+        <div class="pipeline-node-sub">Live map update<br/>+ GeoJSON feed</div>
+      </div>
+    </div>
+
+    <!-- Live stats below pipeline -->
+    <div class="pipeline-detail">
+      <div class="pd-card" id="pd-1">
+        <div class="pd-icon">📸</div>
+        <div class="pd-val" id="pd-photos">1,247</div>
+        <div class="pd-label">Photos submitted today</div>
+        <div class="pd-live"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="pd-card" id="pd-2">
+        <div class="pd-icon">🤖</div>
+        <div class="pd-val" id="pd-ai">1,231</div>
+        <div class="pd-label">AI analyses complete</div>
+        <div class="pd-live"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="pd-card" id="pd-3">
+        <div class="pd-icon">✅</div>
+        <div class="pd-val" id="pd-valid">1,189</div>
+        <div class="pd-label">Entries validated</div>
+        <div class="pd-live"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="pd-card" id="pd-4">
+        <div class="pd-icon">🗺</div>
+        <div class="pd-val" id="pd-gis">1,189</div>
+        <div class="pd-label">City GIS updated</div>
+        <div class="pd-live"><div class="live-dot"></div> Live</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LIVE SIMULATION
+══════════════════════════════════════ -->
+<div id="simulation">
+<div class="sim-inner">
+  <div class="section-eyebrow" style="color:#7EB3FF">⚡ Live Simulation Mode</div>
+  <h2 class="section-headline" style="color:#fff">Trigger a city event.<br/>Watch the system respond.</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.6)">
+    This is the full loop in action. Hit a scenario button — the map updates, new missions fire automatically, and the activity feed shows exactly what the city sees in real time.
+  </p>
+
+  <!-- Event buttons -->
+  <div class="sim-controls">
+    <button class="sim-btn storm" onclick="triggerEvent('storm')">⛈ Simulate Storm Event</button>
+    <button class="sim-btn disease" onclick="triggerEvent('disease')">🦠 Simulate Disease Outbreak</button>
+    <button class="sim-btn heatwave" onclick="triggerEvent('heatwave')">☀ Simulate Heatwave Alert</button>
+    <button class="sim-btn reset" onclick="triggerEvent('reset')">↺ Reset</button>
+  </div>
+
+  <div class="sim-grid">
+    <!-- Sim map -->
+    <div class="sim-map" id="sim-map">
+      <div class="sim-map-bg"></div>
+      <!-- Roads -->
+      <div class="sim-road sim-road-h sim-road-main" style="top:44%"></div>
+      <div class="sim-road sim-road-h" style="top:22%;height:9px"></div>
+      <div class="sim-road sim-road-h" style="top:68%;height:9px"></div>
+      <div class="sim-road sim-road-v sim-road-main" style="left:46%"></div>
+      <div class="sim-road sim-road-v" style="left:22%;width:9px"></div>
+      <div class="sim-road sim-road-v" style="left:72%;width:9px"></div>
+
+      <!-- Event overlays (hidden by default) -->
+      <div class="sim-overlay" id="sim-storm-overlay" style="left:15%;top:55%;width:120px;height:100px;border-radius:14px;font-size:40px">⛈</div>
+      <div class="sim-overlay" id="sim-disease-overlay" style="left:55%;top:45%;width:100px;height:100px;background:rgba(185,28,28,.12);border-color:rgba(185,28,28,.6);font-size:32px">🦠</div>
+      <div class="sim-overlay" id="sim-heat-overlay" style="left:30%;top:20%;width:140px;height:100px;border-radius:14px;background:rgba(232,160,32,.12);border-color:rgba(232,160,32,.6);font-size:36px">☀</div>
+
+      <!-- Tree pins -->
+      <div class="sim-pin ok" id="sp-1" style="left:16%;top:12%"><span>🌳</span></div>
+      <div class="sim-pin ok" id="sp-2" style="left:28%;top:15%"><span>🌲</span></div>
+      <div class="sim-pin ok" id="sp-3" style="left:20%;top:30%"><span>🌳</span></div>
+      <div class="sim-pin ok" id="sp-4" style="left:60%;top:22%"><span>🌲</span></div>
+      <div class="sim-pin ok" id="sp-5" style="left:70%;top:55%"><span>🌳</span></div>
+      <div class="sim-pin ok" id="sp-6" style="left:38%;top:62%"><span>🌲</span></div>
+      <div class="sim-pin ok" id="sp-7" style="left:25%;top:72%"><span>🌳</span></div>
+      <div class="sim-pin ok" id="sp-8" style="left:80%;top:35%"><span>🌲</span></div>
+      <div class="sim-pin ok" id="sp-9" style="left:50%;top:15%"><span>🌳</span></div>
+      <div class="sim-pin ok" id="sp-10" style="left:85%;top:65%"><span>🌲</span></div>
+
+      <!-- Mission zone (hidden initially) -->
+      <div id="sim-mission-zone" style="position:absolute;border-radius:12px;border:2px dashed rgba(0,82,204,.7);background:rgba(0,82,204,.08);display:flex;align-items:flex-start;justify-content:flex-end;padding:7px;font-size:9px;font-weight:700;color:rgba(100,160,255,.9);transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1)"></div>
+
+      <!-- Event label bar -->
+      <div class="sim-event-label" id="sim-event-label">
+        <div class="sim-event-indicator" id="sim-event-dot" style="background:#22C55E"></div>
+        <span id="sim-event-text">System nominal — no active events</span>
+      </div>
+    </div>
+
+    <!-- Feed panel -->
+    <div class="sim-feed">
+      <div class="sim-feed-head">
+        <div class="live-dot"></div>
+        LIVE CITY FEED
+      </div>
+      <div class="sim-feed-list" id="sim-feed-list">
+        <div class="sim-feed-item visible">
+          <div class="sfi-icon" style="background:rgba(26,122,60,.2)">✅</div>
+          <div class="sfi-text">
+            <div class="sfi-title">System ready</div>
+            <div class="sfi-sub">847 students online · 12,483 trees monitored</div>
+            <div class="sfi-time">just now</div>
+          </div>
+        </div>
+        <div class="sim-feed-item visible">
+          <div class="sfi-icon" style="background:rgba(0,82,204,.2)">📊</div>
+          <div class="sfi-text">
+            <div class="sfi-title">Daily GIS sync complete</div>
+            <div class="sfi-sub">1,189 new data points pushed to city dashboard</div>
+            <div class="sfi-time">2 min ago</div>
+          </div>
+        </div>
+      </div>
+      <!-- Auto-generated missions panel -->
+      <div class="sim-missions-updated" id="sim-missions-panel">
+        <div class="smu-title">AUTO-GENERATED MISSIONS</div>
+        <div class="smu-item"><div class="smu-dot" style="background:#1A7A3C"></div><span>Inventory check — Schwabing</span><span class="smu-new" id="smu-1">ACTIVE</span></div>
+        <div class="smu-item"><div class="smu-dot" style="background:#1A7A3C"></div><span>Disease patrol — Maxvorstadt</span><span class="smu-new" id="smu-2">ACTIVE</span></div>
+        <div class="smu-item" id="smu-row-3"><div class="smu-dot" id="smu-dot-3" style="background:#666"></div><span id="smu-text-3">Awaiting city events...</span><span class="smu-new" id="smu-3"></span></div>
+        <div class="smu-item" id="smu-row-4" style="display:none"><div class="smu-dot" id="smu-dot-4" style="background:#666"></div><span id="smu-text-4"></span><span class="smu-new" id="smu-4">NEW</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">🌳 Baum<span>Intel</span></div>
+    <div class="footer-tagline">Student-powered urban tree intelligence — Munich, 2026</div>
+  </div>
+  <div class="footer-badge">
+    🏆 Munich Urban Innovation Challenge — Competition Entry
+  </div>
+</footer>
+
+<script>
+/* ══════════════ TREE POPUP ══════════════ */
+function showPopup(pin, species, cond, date, rel, color) {
+  const popup = document.getElementById('tree-popup');
+  document.getElementById('tp-species').textContent = '🌳 ' + species;
+  document.getElementById('tp-cond').textContent = cond;
+  document.getElementById('tp-date').textContent = date;
+  document.getElementById('tp-rel').textContent = rel;
+  const badge = document.getElementById('tp-badge');
+  if (cond === 'Critical') {
+    badge.textContent = '⚠ Flagged for inspection';
+    badge.style.background = 'rgba(185,28,28,.2)'; badge.style.color = '#FCA5A5';
+  } else {
+    badge.textContent = '✓ AI Verified';
+    badge.style.background = 'rgba(26,122,60,.2)'; badge.style.color = '#4ADE80';
+  }
+  let left = parseFloat(pin.style.left) + 4;
+  let top = parseFloat(pin.style.top) - 2;
+  if (left > 50) left = left - 52;
+  if (top > 60) top = top - 30;
+  popup.style.left = left + '%'; popup.style.top = top + '%';
+  popup.classList.remove('hidden'); popup.classList.add('visible');
+  setTimeout(() => { popup.classList.remove('visible'); popup.classList.add('hidden'); }, 3500);
+}
+
+/* ══════════════ AI CONFIDENCE ══════════════ */
+function toggleConf(el) {
+  document.querySelectorAll('.ai-conf-opt').forEach(o => o.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ══════════════ CITY PANEL ══════════════ */
+let currentPrio = 'med';
+function setPrio(btn, level) {
+  document.querySelectorAll('.cp-prio-btn').forEach(b => {
+    b.classList.remove('sel-low','sel-med','sel-high');
+  });
+  btn.classList.add('sel-' + level);
+  currentPrio = level;
+}
+
+const missionTemplates = {
+  disease: {
+    icon:'🦠', title:'Disease Patrol',
+    bodies:{
+      low:'Survey trees in the selected district for early-stage pest indicators. Photograph bark, leaf clusters, and visible nesting. AI will assess and flag suspicious finds.',
+      med:'Urgent assessment needed: photograph and score all trees showing disease symptoms. Focus on discoloration, bark lesions, and unusual growth. AI will cluster your submissions into a spread map.',
+      high:'CRITICAL: Systematic pest outbreak suspected. Every tree in the zone must be photographed and evaluated within 48h. City arborists are on standby pending your data.'
+    },
+    tags:['🦠 Disease check','⏰ 48h window','🏅 Detector badge'],
+    xp:{low:150,med:350,high:700}
+  },
+  storm: {
+    icon:'⛈', title:'Storm Damage Survey',
+    bodies:{
+      low:'Post-storm walkthrough: photograph fallen branches and assess structural risk for trees on the pre-loaded route. Flag any leaning trunks.',
+      med:'Systematic storm damage documentation required. Photograph each tree in the impact zone, note broken limbs, uprooting risk, and road proximity. City safety team awaiting data.',
+      high:'EMERGENCY SURVEY: Major storm impact detected. All trees in the affected zone need immediate damage assessment. Priority: identify public safety risks on main thoroughfares.'
+    },
+    tags:['⛈ Storm damage','🚨 Safety priority','🌪 Responder badge'],
+    xp:{low:180,med:280,high:650}
+  },
+  inventory: {
+    icon:'📋', title:'Inventory Gap Fill',
+    bodies:{
+      low:'Walk the pre-loaded GPS route and photograph any unmapped trees you find. Confirm species using AI suggestion and submit. Every new entry improves GIS accuracy.',
+      med:'23 inventory gaps identified in this district. Walk the route, photograph each unmapped tree, confirm species, and add condition notes. Progress tracked on the leaderboard.',
+      high:'Urgent: GIS inventory critically incomplete ahead of environmental planning deadline. All unmapped trees in the district must be documented this week.'
+    },
+    tags:['📍 GPS route loaded','🗺 Cartographer badge'],
+    xp:{low:100,med:180,high:400}
+  },
+  heatwave: {
+    icon:'☀', title:'Heatwave Stress Check',
+    bodies:{
+      low:'Check recently planted trees for heat stress signs: wilting, leaf scorch, and crown thinning. Photograph and submit — AI will estimate dehydration risk.',
+      med:'Extended heat event forecast. All young and recently transplanted trees in the district need welfare checks. Look for wilting, cracked soil around the base, and crown die-back.',
+      high:'ALERT: Record temperatures predicted. Emergency assessment of high-risk trees required. City will dispatch water trucks to locations you flag as critical.'
+    },
+    tags:['☀ Heat stress','💧 Water priority','🌡 Climate badge'],
+    xp:{low:120,med:220,high:500}
+  },
+  pruning: {
+    icon:'✂', title:'Pruning Priority Survey',
+    bodies:{
+      low:'Identify trees in your area with overgrown crowns or dead limbs. Photograph and note which branches are crossing power lines or blocking sightlines.',
+      med:'Pre-season pruning survey: walk the district and flag trees requiring professional attention. Score crown density, dead wood percentage, and any infrastructure conflicts.',
+      high:'Immediate pruning survey required before storm season. All trees within 5m of buildings or power lines need assessment. Data feeds directly to the arborist scheduling system.'
+    },
+    tags:['✂ Pruning survey','🌳 Arborist review'],
+    xp:{low:100,med:160,high:350}
+  }
+};
+
+function generateMission() {
+  const btn = document.getElementById('cp-gen-btn');
+  const issue = document.getElementById('cp-issue').value;
+  const district = document.getElementById('cp-district').value;
+  const tmpl = missionTemplates[issue];
+  const body = tmpl.bodies[currentPrio];
+  const xp = tmpl.xp[currentPrio];
+  const prioLabel = {low:'LOW',med:'MEDIUM',high:'URGENT'}[currentPrio];
+  const prioColor = {low:'rgba(26,122,60,.25)',med:'rgba(232,160,32,.25)',high:'rgba(185,28,28,.25)'}[currentPrio];
+  const prioText = {low:'#4ADE80',med:'#FCD34D',high:'#FCA5A5'}[currentPrio];
+
+  btn.textContent = '⏳ Generating with AI...';
+  btn.classList.add('generating');
+
+  setTimeout(() => {
+    btn.textContent = '✨ Generate Mission with AI';
+    btn.classList.remove('generating');
+
+    const card = document.createElement('div');
+    card.className = 'cp-mission-output';
+    card.style.cssText = 'animation:fade-up .5s ease both;border-color:rgba(0,82,204,.3)';
+    card.innerHTML = `
+      <div class="cp-mission-head">
+        <div class="cp-mission-title">${tmpl.icon} ${tmpl.title} — ${district}</div>
+        <span class="cp-new-badge">✨ AI GENERATED</span>
+        <span class="cp-tag" style="color:${prioText};background:${prioColor}">${prioLabel}</span>
+      </div>
+      <div class="cp-mission-body">${body}</div>
+      <div class="cp-mission-footer">
+        ${tmpl.tags.map(t=>`<div class="cp-tag">${t}</div>`).join('')}
+        <div class="cp-tag">+${xp} XP</div>
+        <div class="cp-tag">📍 ${district}</div>
+      </div>`;
+
+    const output = document.getElementById('cp-output');
+    output.insertBefore(card, output.children[1]);
+
+    // Log entry
+    const log = document.getElementById('cp-log');
+    const now = new Date();
+    const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-time">${t}</span><span class="log-ok">✓</span><span>Mission published — ${district} ${tmpl.title} · ${xp} XP · students notified</span>`;
+    log.insertBefore(line, log.firstChild);
+  }, 1400);
+}
+
+/* ══════════════ PIPELINE COUNTER ANIMATION ══════════════ */
+function animateCounter(el, target, duration=1200) {
+  const start = parseInt(el.textContent.replace(/,/g,'')) || 0;
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const val = Math.floor(start + (target - start) * progress);
+    el.textContent = val.toLocaleString();
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Cycle pipeline node states
+let pipelineInterval;
+function startPipelineCycle() {
+  const nodes = ['pn-1','pn-2','pn-3','pn-4'];
+  const cards = ['pd-1','pd-2','pd-3','pd-4'];
+  let idx = 0;
+  pipelineInterval = setInterval(() => {
+    nodes.forEach((id,i) => {
+      const el = document.getElementById(id);
+      el.classList.remove('active','done');
+      if (i < idx) el.classList.add('done');
+      else if (i === idx) el.classList.add('active');
+    });
+    cards.forEach((id,i) => {
+      document.getElementById(id).classList.toggle('lit', i === idx);
+    });
+    idx = (idx + 1) % (nodes.length + 1);
+    if (idx === 0) {
+      // bump counters slightly
+      const photos = document.getElementById('pd-photos');
+      const ai = document.getElementById('pd-ai');
+      const val = document.getElementById('pd-valid');
+      const gis = document.getElementById('pd-gis');
+      [photos,ai,val,gis].forEach(el => {
+        const cur = parseInt(el.textContent.replace(/,/g,''));
+        animateCounter(el, cur + Math.floor(Math.random()*3+1), 600);
+      });
+    }
+  }, 1200);
+}
+
+// Start pipeline when in view
+new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !pipelineInterval) startPipelineCycle();
+    else if (!e.isIntersecting && pipelineInterval) {
+      clearInterval(pipelineInterval); pipelineInterval = null;
+    }
+  });
+}, {threshold:0.3}).observe(document.getElementById('pipeline'));
+
+/* ══════════════ LIVE SIMULATION ══════════════ */
+let currentEvent = null;
+let feedTimeout = [];
+
+const eventConfig = {
+  storm: {
+    label:'⛈ Storm event detected — Nymphenburg district',
+    dotColor:'#F59E0B',
+    overlayId:'sim-storm-overlay',
+    affectedPins:['sp-3','sp-7','sp-6'],
+    pinType:'caution',
+    missionZone:{left:'10%',top:'52%',width:'38%',height:'28%',text:'MISSION: STORM DAMAGE'},
+    missionLabel:'⛈ Storm Damage Survey — Nymphenburg',
+    missionDot:'#C05C00',
+    feedItems:[
+      {icon:'⛈',bg:'rgba(192,92,0,.2)',title:'Storm event detected — Nymphenburg',sub:'Wind speeds >90km/h recorded · 3 tree zones at risk',delay:400},
+      {icon:'🤖',bg:'rgba(0,82,204,.2)',title:'AI generating emergency missions',sub:'Analysing GIS data for affected zones...',delay:1200},
+      {icon:'🎯',bg:'rgba(0,82,204,.3)',title:'Mission auto-published: Storm Damage Survey',sub:'Priority URGENT · +500 XP · 847 students notified',delay:2200},
+      {icon:'📱',bg:'rgba(26,122,60,.2)',title:'23 students accepted the mission',sub:'First submissions expected within 15 minutes',delay:3400},
+      {icon:'📍',bg:'rgba(26,122,60,.3)',title:'First data points arriving',sub:'3 trees flagged with structural damage near Nymphenburg Allee',delay:4600},
+    ]
+  },
+  disease: {
+    label:'🦠 Disease cluster detected — Maxvorstadt oaks',
+    dotColor:'#F87171',
+    overlayId:'sim-disease-overlay',
+    affectedPins:['sp-4','sp-9'],
+    pinType:'warn',
+    missionZone:{left:'52%',top:'10%',width:'40%',height:'32%',text:'MISSION: DISEASE PATROL'},
+    missionLabel:'🦠 Disease Patrol — Maxvorstadt',
+    missionDot:'#B91C1C',
+    feedItems:[
+      {icon:'🦠',bg:'rgba(185,28,28,.2)',title:'AI flagged disease cluster — Maxvorstadt',sub:'3 oak submissions show consistent pest indicators',delay:400},
+      {icon:'🤖',bg:'rgba(0,82,204,.2)',title:'Cluster analysis complete',sub:'87% confidence: oak processionary moth · Spread radius estimated 600m',delay:1400},
+      {icon:'🎯',bg:'rgba(0,82,204,.3)',title:'Mission auto-published: Disease Patrol',sub:'Priority URGENT · +700 XP · Arborist alert sent',delay:2400},
+      {icon:'🏛',bg:'rgba(232,160,32,.2)',title:'Grünflächenamt notified',sub:'Arborist team scheduled — pending student verification data',delay:3600},
+      {icon:'📊',bg:'rgba(26,122,60,.2)',title:'GeoJSON exported to city GIS',sub:'Disease zone boundaries pushed to city dashboard',delay:4800},
+    ]
+  },
+  heatwave: {
+    label:'☀ Heatwave alert — temperature exceeds 37°C',
+    dotColor:'#FCD34D',
+    overlayId:'sim-heat-overlay',
+    affectedPins:['sp-1','sp-2','sp-9'],
+    pinType:'caution',
+    missionZone:{left:'12%',top:'8%',width:'42%',height:'26%',text:'MISSION: HEAT STRESS CHECK'},
+    missionLabel:'☀ Heatwave Stress Check — Schwabing',
+    missionDot:'#E8A020',
+    feedItems:[
+      {icon:'☀',bg:'rgba(232,160,32,.2)',title:'Heatwave alert — 37°C forecast',sub:'Young tree population at elevated stress risk · 234 at-risk locations identified',delay:400},
+      {icon:'🤖',bg:'rgba(0,82,204,.2)',title:'AI risk model running',sub:'Prioritising trees <5 years planted · Sandy soil zones flagged',delay:1300},
+      {icon:'🎯',bg:'rgba(0,82,204,.3)',title:'Mission auto-published: Heatwave Stress Check',sub:'Priority HIGH · +500 XP · Water truck pre-positioned',delay:2300},
+      {icon:'💧',bg:'rgba(26,122,60,.2)',title:'City water response pre-activated',sub:'3 irrigation vehicles on standby · Awaiting student triage data',delay:3500},
+      {icon:'📊',bg:'rgba(26,122,60,.2)',title:'Heat stress map updating',sub:'14 trees flagged critical · Water truck routes optimised by AI',delay:4800},
+    ]
+  },
+  reset: null
+};
+
+function triggerEvent(type) {
+  // Clear all timeouts
+  feedTimeout.forEach(t => clearTimeout(t));
+  feedTimeout = [];
+
+  // Reset all pins
+  for (let i=1;i<=10;i++) {
+    const p = document.getElementById('sp-'+i);
+    if(p){p.className='sim-pin ok'}
+  }
+  // Hide all overlays
+  ['sim-storm-overlay','sim-disease-overlay','sim-heat-overlay'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.remove('show');
+  });
+  // Reset mission zone
+  const mz = document.getElementById('sim-mission-zone');
+  mz.style.transform='scale(0)'; mz.textContent='';
+
+  // Reset event label
+  const label = document.getElementById('sim-event-label');
+  const dot = document.getElementById('sim-event-dot');
+  const text = document.getElementById('sim-event-text');
+  label.classList.remove('show');
+
+  // Reset feed
+  const feed = document.getElementById('sim-feed-list');
+  feed.innerHTML = `
+    <div class="sim-feed-item visible">
+      <div class="sfi-icon" style="background:rgba(26,122,60,.2)">✅</div>
+      <div class="sfi-text"><div class="sfi-title">System ready</div><div class="sfi-sub">847 students online · 12,483 trees monitored</div><div class="sfi-time">just now</div></div>
+    </div>`;
+
+  // Reset missions
+  document.getElementById('smu-dot-3').style.background='#666';
+  document.getElementById('smu-text-3').textContent='Awaiting city events...';
+  document.getElementById('smu-3').textContent='';
+  document.getElementById('smu-3').classList.remove('show');
+  document.getElementById('smu-row-4').style.display='none';
+
+  // Remove active states from sim buttons
+  document.querySelectorAll('.sim-btn').forEach(b=>b.classList.remove('active-event'));
+
+  currentEvent = type;
+  if (type === 'reset') return;
+
+  const cfg = eventConfig[type];
+  if (!cfg) return;
+
+  // Mark button active
+  document.querySelectorAll('.sim-btn').forEach(b=>{
+    if(b.textContent.toLowerCase().includes(type.split('_')[0])||
+       (type==='disease'&&b.textContent.includes('Disease'))||
+       (type==='storm'&&b.textContent.includes('Storm'))||
+       (type==='heatwave'&&b.textContent.includes('Heatwave'))){
+      b.classList.add('active-event');
+    }
+  });
+
+  // Show event label
+  setTimeout(()=>{
+    text.textContent = cfg.label;
+    dot.style.background = cfg.dotColor;
+    label.classList.add('show');
+  }, 200);
+
+  // Show overlay
+  setTimeout(()=>{
+    document.getElementById(cfg.overlayId).classList.add('show');
+  }, 500);
+
+  // Flip affected pins
+  cfg.affectedPins.forEach((id,i)=>{
+    feedTimeout.push(setTimeout(()=>{
+      const p = document.getElementById(id);
+      if(p) p.className = 'sim-pin '+cfg.pinType;
+    }, 800 + i*200));
+  });
+
+  // Show mission zone
+  feedTimeout.push(setTimeout(()=>{
+    const z = cfg.missionZone;
+    mz.style.left=z.left; mz.style.top=z.top;
+    mz.style.width=z.width; mz.style.height=z.height;
+    mz.textContent=z.text; mz.style.transform='scale(1)';
+  }, 2000));
+
+  // Update auto-mission in panel
+  feedTimeout.push(setTimeout(()=>{
+    document.getElementById('smu-dot-3').style.background = cfg.missionDot;
+    document.getElementById('smu-text-3').textContent = cfg.missionLabel;
+    document.getElementById('smu-3').textContent = 'NEW';
+    document.getElementById('smu-3').classList.add('show');
+    document.getElementById('smu-row-4').style.display='flex';
+    document.getElementById('smu-dot-4').style.background='#1A7A3C';
+    document.getElementById('smu-text-4').textContent='Existing missions re-prioritised';
+    document.getElementById('smu-4').classList.add('show');
+  }, 2400));
+
+  // Feed items
+  cfg.feedItems.forEach(item=>{
+    feedTimeout.push(setTimeout(()=>{
+      const div = document.createElement('div');
+      div.className = 'sim-feed-item';
+      div.innerHTML = `
+        <div class="sfi-icon" style="background:${item.bg}">${item.icon}</div>
+        <div class="sfi-text">
+          <div class="sfi-title">${item.title}</div>
+          <div class="sfi-sub">${item.sub}</div>
+          <div class="sfi-time">just now</div>
+        </div>`;
+      feed.insertBefore(div, feed.firstChild);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>div.classList.add('visible')));
+    }, item.delay));
+  });
+}
+
+/* ══════════════ SCROLL REVEAL ══════════════ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+}, {threshold:0.1});
+
+document.querySelectorAll('.mission-card,.impact-card,.city-card,.flow-step,.score-bar-card,.cp-mission-output,.pipeline-node,.pd-card').forEach(el => {
+  el.style.opacity='0';
+  el.style.transform='translateY(24px)';
+  el.style.transition='opacity .5s ease, transform .5s ease';
+  revealObs.observe(el);
+});
+
+/* ══════════════ SMOOTH NAV ══════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
